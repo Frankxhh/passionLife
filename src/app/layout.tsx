@@ -26,7 +26,7 @@ export default function RootLayout({
       <html lang="zh-CN" className={`${GeistSans.variable}`}>
         <body>
           <SignedOut>
-            <SignInButton mode={"modal"} />
+            <SignInButton />
           </SignedOut>
           <SignedIn>
             <UserButton showName />
