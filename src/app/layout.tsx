@@ -11,6 +11,9 @@ import {
 } from "@clerk/nextjs";
 
 import { zhCN } from "@clerk/localizations";
+// 引入自定义翻译文件
+import zhCNLocales from "@/locales/zh.json";
+import merge from "lodash.merge";
 
 export const metadata: Metadata = {
   title: "kiwi",
@@ -21,8 +24,10 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  // 合并翻译文件
+  const localization = merge(zhCN, zhCNLocales);
   return (
-    <ClerkProvider localization={zhCN}>
+    <ClerkProvider localization={localization}>
       <html lang="zh-CN" className={`${GeistSans.variable}`}>
         <body>
           <SignedOut>
