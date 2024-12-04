@@ -29,15 +29,7 @@ export default function RootLayout({
   return (
     <ClerkProvider localization={localization}>
       <html lang="zh-CN" className={`${GeistSans.variable}`}>
-        <body>
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton showName />
-          </SignedIn>
-          {children}
-        </body>
+        <body>{children}</body>
       </html>
     </ClerkProvider>
   );
