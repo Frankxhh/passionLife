@@ -8,6 +8,7 @@ import {zhCN} from '@clerk/localizations';
 // 引入自定义翻译文件
 import zhCNLocales from '@/locales/zh.json';
 import merge from 'lodash.merge';
+import Layout from '@/components/layout';
 
 export const metadata: Metadata = {
     title: 'kiwi',
@@ -21,7 +22,9 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
     return (
         <ClerkProvider localization={localization}>
             <html lang="zh-CN" className={`${GeistSans.variable}`}>
-                <body>{children}</body>
+                <body>
+                    <Layout>{children}</Layout>
+                </body>
             </html>
         </ClerkProvider>
     );
