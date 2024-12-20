@@ -1,29 +1,51 @@
-# Create T3 App
+# 🌈passionLife
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+### ✨ 项目背景：
 
-## What's next? How do I make an app with this?
+> 随着全球健康意识的提升，越来越多的人开始重视自身的身体健康和体型管理。肥胖及相关疾病如糖尿病、心血管疾病的高发率促使人们对健康管理的需求不断增加。科技进步为人们提供了更多元化的健康管理工具，移动应用程序和智能穿戴设备的普及使得个人能够更方便地记录自己的日常活动、饮食摄入等数据，并通过这些数据分析来调整生活习惯，达到更好的身材管理效果.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+### ✨ 项目目的：
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+>本项目旨在开发一款名为“passionLife”的创新身材管理软件，它将摒弃掉大多数同类型app中华而不实的功能，分别从目标建立/训练/饮食三个维度出发，帮助用户实现健康的体重控制和体态塑造。通过整合先进的算法、个性化的营养和运动计划、社区支持功能以及严格的数据安全保障，“passionLife”将成为用户健康管理的好帮手。
 
--   [Next.js](https://nextjs.org)
--   [NextAuth.js](https://next-auth.js.org)
--   [Prisma](https://prisma.io)
--   [Drizzle](https://orm.drizzle.team)
--   [Tailwind CSS](https://tailwindcss.com)
--   [tRPC](https://trpc.io)
+### ✨ 项目范围：
 
-## Learn More
+> #### “passionLife”将专注于以下几个核心模块：
+>- 用户资料创建与管理
+>- 个性化健身计划-健身日志与成果分析
+>- 饮食日志与营养分析
+>- 健康资讯与社区互动
+>- 智能健身助理
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+### ✨ 预期成果：
 
--   [Documentation](https://create.t3.gg/)
--   [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+>- 完整的功能性身材管理应用程序
+>- 响应式web应用
+>- 用户手册和技术文档
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+### ✨ 团队结构与角色：
 
-## How do I deploy this?
+>-  项目经理：张歆辉
+>-  ui设计：张歆辉
+>-  前后端开发：张歆辉
+>-  运营：张歆辉
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+### 🚀 技术选型：
+
+>- 全栈技术选型：nextjs
+>- ui相关：shadcui + tailwind
+>- 数据库相关：zod + prisma + postgre
+>- 三方服务：clerk
+
+
+
+
+
+
+
+
+
+
+
+	
+	
