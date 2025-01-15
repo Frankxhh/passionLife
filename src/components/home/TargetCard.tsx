@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { type TargetListItem } from '@/app/page';
 import Image from 'next/image';
 
-const TargetCard: React.FC = ({ targetItem }: TargetListItem) => {
+const TargetCard: React.FC<{ targetItem: TargetListItem }> = ({ targetItem }) => {
   const [progress, setProgress] = useState(13);
   useEffect(() => {
     const timer = setTimeout(() => setProgress(66), 500);
@@ -15,7 +15,7 @@ const TargetCard: React.FC = ({ targetItem }: TargetListItem) => {
     <Card className={'relative mb-4'}>
       <CardHeader className={'p-4'}>
         <CardTitle>{targetItem.title}</CardTitle>
-        <CardDescription>已完成2/4次{targetItem.title.description}</CardDescription>
+        <CardDescription>已完成2/4次{targetItem.description}</CardDescription>
       </CardHeader>
       <CardContent className={'flex items-center gap-4 px-4'}>
         <div className={'mb-2'}>
