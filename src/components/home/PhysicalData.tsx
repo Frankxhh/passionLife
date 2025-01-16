@@ -1,10 +1,103 @@
 'use client';
 import { Badge } from '@/components/ui/badge';
+import { UserRoundPen } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Button } from '../ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useState } from 'react';
+import { editUserInfo } from '@/actions/user/user';
+
+interface PhysicalDataForm {
+  height: number;
+  weight: number;
+}
+
+const EditDialog: React.FC<{
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}> = ({ open, setOpen }) => {
+  const [formData, setFormData] = useState<PhysicalDataForm>({
+    height: 170,
+    weight: 65,
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    // TODO: 实现保存逻辑
+    console.log('保存数据:', formData);
+    setOpen(false);
+    await editUserInfo(formData);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>编辑身体数据</DialogTitle>
+          <DialogDescription>在这里更新您的身高体重信息</DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="height" className="text-right">
+              身高(cm)
+            </Label>
+            <Input
+              id="height"
+              name="height"
+              type="number"
+              value={formData.height}
+              onChange={handleChange}
+              className="col-span-3"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="weight" className="text-right">
+              体重(kg)
+            </Label>
+            <Input
+              id="weight"
+              name="weight"
+              type="number"
+              value={formData.weight}
+              onChange={handleChange}
+              className="col-span-3"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button type="submit" onClick={handleSubmit}>
+            保存更改
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 const PhysicalData = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <>
-      <div className={'mb-2 flex h-32 flex-row items-end px-1'}>
+      <div className={'relative mb-2 flex h-32 flex-row items-end px-1'}>
+        <div onClick={() => setIsOpen(true)} className="absolute right-0 top-0 rounded p-1">
+          <UserRoundPen />
+        </div>
         {/*体重*/}
         <div className={'flex flex-1 flex-col'}>
           <div className={'flex'}>
@@ -19,6 +112,7 @@ const PhysicalData = () => {
           <span className={'text-sm opacity-60'}>对比昨天</span>
         </div>
       </div>
+      {/* 细节信息 */}
       <div className={'flex gap-8 rounded-xl bg-[#69B1FF] px-4 py-2'}>
         <div className={'flex flex-col gap-1'}>
           <div className={'flex items-end'}>
@@ -35,6 +129,7 @@ const PhysicalData = () => {
           <span>20.3</span>
         </div>
       </div>
+      <EditDialog open={isOpen} setOpen={setIsOpen} />
     </>
   );
 };
