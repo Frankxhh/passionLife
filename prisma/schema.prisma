@@ -2,19 +2,21 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    @@index([name])
+// 用户基本信息模型
+model UserInfo {
+  id        String   @id // clerk返回的用户id
+  height    Float? // 身高(cm)
+  weight    Float? // 体重(kg)
+  bmi       Float? // 体重指数
+  compare   Float? // 对比昨天
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
