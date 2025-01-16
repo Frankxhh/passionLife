@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import { Dumbbell, Home, Plus, Utensils } from 'lucide-react';
 
@@ -13,6 +14,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
   SidebarSeparator,
+  useSidebar,
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
 
@@ -34,8 +36,9 @@ const navBar = [
   },
 ];
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  console.log(props, 'props');
+export const AppSidebar: React.FC = () => {
+  const { setOpenMobile } = useSidebar();
+
   return (
     <Sidebar>
       <SidebarHeader className="h-16 border-b border-sidebar-border">
@@ -49,7 +52,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton>
                 {item.icon}
-                <Link className={'w-full'} href={item.url}>
+                <Link
+                  onClick={() => {
+                    setOpenMobile(false);
+                  }}
+                  className={'w-full'}
+                  href={item.url}
+                >
                   {item.title}
                 </Link>
               </SidebarMenuButton>
@@ -70,4 +79,4 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarRail />
     </Sidebar>
   );
-}
+};

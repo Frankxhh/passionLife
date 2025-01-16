@@ -1,14 +1,7 @@
-'use client';
-
-{
-  /*import logo from '@/assets/image/logo.webp';*/
-}
-
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
-import Image from 'next/image';
-
 export function NavHeader() {
-  const { isMobile } = useSidebar();
-
-  return <div>{/*<Image src={logo} alt="" layout="fill" />*/}</div>;
+  return (
+    <div className={'flex h-full flex-col items-center justify-center'}>
+      <h1 className={'text-center text-2xl font-bold'}>PASSION LIFE</h1>
+    </div>
+  );
 }
