@@ -9,8 +9,8 @@ import { zhCN } from '@clerk/localizations';
 import zhCNLocales from '@/locales/zh.json';
 import merge from 'lodash.merge';
 import Layout from '@/components/layout';
-import { auth } from '@clerk/nextjs/server';
 import { ThemeProvider } from '@/components/Theme/ThemeProvider';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'kiwi',
@@ -27,6 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <body>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <Layout>{children}</Layout>
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>
