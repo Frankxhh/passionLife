@@ -15,7 +15,7 @@ export const useHandleClientResponse = <T,>() => {
         showErrorMessage?: boolean;
       },
     ): Promise<T | null> => {
-      const { showSuccessMessage = false, showErrorMessage = true, successMessage } = options || {};
+      const { showSuccessMessage = false, showErrorMessage = true, successMessage } = options ?? {};
 
       try {
         const response = await promise;
