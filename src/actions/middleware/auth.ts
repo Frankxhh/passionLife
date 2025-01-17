@@ -6,8 +6,8 @@ export const withAuth = <T, R = void>(handler: AuthenticatedHandler<T, R>) => {
   return async (...args: T[]): Promise<R> => {
     const { userId } = await auth();
     if (!userId) {
-      await auth.protect();
-      throw new Error('Unauthorized');
+      window.location.reload();
+      return Promise.reject(new Error('Unauthorized'));
     }
     return handler(userId, ...args);
   };
