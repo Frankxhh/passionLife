@@ -8,13 +8,13 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import { Button } from '../ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
-import { editUserInfo } from '@/actions/user/user';
+import { editUserInfoAction } from '@/actions/user/user';
+import { useHandleClientResponse } from '@/hooks/use-response';
 
 interface PhysicalDataForm {
   height: number;
@@ -25,6 +25,8 @@ const EditDialog: React.FC<{
   open: boolean;
   setOpen: (open: boolean) => void;
 }> = ({ open, setOpen }) => {
+  const handleClientResponse = useHandleClientResponse<void>();
+
   const [formData, setFormData] = useState<PhysicalDataForm>({
     height: 170,
     weight: 65,
@@ -39,10 +41,11 @@ const EditDialog: React.FC<{
   };
 
   const handleSubmit = async () => {
-    // TODO: 实现保存逻辑
-    console.log('保存数据:', formData);
     setOpen(false);
-    await editUserInfo(formData);
+    await handleClientResponse(editUserInfoAction(formData), {
+      showSuccessMessage: true,
+      successMessage: '保存成功',
+    });
   };
 
   return (
