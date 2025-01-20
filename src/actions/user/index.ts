@@ -4,13 +4,34 @@ import { withAuth } from '../middleware/auth';
 import { editUserInfoSchema, type GetUserInfoSchema, type EditUserInfoSchema } from './type';
 import { handleServerAction, type ServerResponse } from '../middleware/response';
 import { db } from '@/server/db';
-
+import dayjs from 'dayjs';
 // 获取用户信息
 export const getUserInfoAction = withAuth<void, ServerResponse<GetUserInfoSchema | null>>(async userId => {
   return handleServerAction(async () => {
+    // 获取用户当前信息
     const userInfo = await db.userInfo.findUnique({
       where: { id: userId },
     });
+
+    // 获取昨天的历史记录
+    const yesterdayRecord = await db.userInfoHistory.findFirst({
+      where: {
+        userId,
+        recordedAt: {
+          gte: dayjs().subtract(1, 'day').startOf('day').toDate(),
+          lte: dayjs().subtract(1, 'day').endOf('day').toDate(),
+        },
+      },
+      orderBy: {
+        recordedAt: 'desc',
+      },
+    });
+
+    // 如果找到昨天的记录，计算差值
+    if (userInfo && yesterdayRecord) {
+      userInfo.compare = userInfo.weight - yesterdayRecord.weight;
+    }
+
     return userInfo;
   });
 });
