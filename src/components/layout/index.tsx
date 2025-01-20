@@ -5,6 +5,7 @@ import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { UserButton, useUser } from '@clerk/nextjs';
 import ToggleMode from '@/components/Theme/ToggleMode';
+import SetTarget from './components/SetTarget';
 
 function LayoutPage({ children }: { children: React.ReactNode }) {
   const { user, isLoaded } = useUser();
@@ -19,7 +20,9 @@ function LayoutPage({ children }: { children: React.ReactNode }) {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbPage>October 2024</BreadcrumbPage>
+                  <BreadcrumbPage>
+                    <SetTarget />
+                  </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
