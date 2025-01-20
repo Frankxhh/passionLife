@@ -23,8 +23,19 @@ const EditDialog: React.FC<{
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   toGetUserInfo: () => void;
-}> = ({ open, setOpen, toGetUserInfo }) => {
+  userInfo: GetUserInfoSchema | null;
+}> = ({ open, setOpen, toGetUserInfo, userInfo }) => {
   const handleClientResponse = useHandleClientResponse();
+
+  useEffect(() => {
+    if (userInfo) {
+      form.reset({
+        height: userInfo.height ?? 0,
+        weight: userInfo.weight ?? 0,
+        bmi: userInfo.bmi ?? 0,
+      });
+    }
+  }, [userInfo]);
 
   const form = useForm({
     defaultValues: {
@@ -169,7 +180,7 @@ const PhysicalData = () => {
           <span>{userInfo?.bmi ?? '-'}</span>
         </div>
       </div>
-      <EditDialog open={isOpen} setOpen={setIsOpen} toGetUserInfo={toGetUserInfo} />
+      <EditDialog open={isOpen} userInfo={userInfo} setOpen={setIsOpen} toGetUserInfo={toGetUserInfo} />
     </>
   );
 };
