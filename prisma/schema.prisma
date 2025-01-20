@@ -13,9 +13,9 @@ datasource db {
 // 用户基本信息模型
 model UserInfo {
   id        String   @id // clerk返回的用户id
-  height    Float? // 身高(cm)
-  weight    Float? // 体重(g)
-  bmi       Float? // 体重指数
+  height    Float // 身高(cm)
+  weight    Float // 体重(g)
+  bmi       Float // 体重指数
   compare   Float? // 对比昨天
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -29,5 +29,18 @@ model UserTarget {
   targetBMI             Float    // 目标BMI
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
+}
+
+// 用户身体数据历史记录
+model UserWeightHistory {
+  id        String   @id @default(cuid())
+  userId    String   // clerk返回的用户id
+  weight    Float    // 体重(kg)
+  bmi       Float   // 当时的BMI
+  date      DateTime @default(now()) // 记录日期
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, date]) // 添加复合索引优化查询性能
 }
 
