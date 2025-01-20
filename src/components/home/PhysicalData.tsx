@@ -30,6 +30,7 @@ const EditDialog: React.FC<{
     defaultValues: {
       height: 0,
       weight: 0,
+      bmi: 0,
     },
     resolver: zodResolver(editUserInfoSchema),
   });
@@ -39,6 +40,7 @@ const EditDialog: React.FC<{
       editUserInfoAction({
         height: data.height,
         weight: data.weight,
+        bmi: data.bmi,
       }),
       {
         showSuccessMessage: true,
@@ -80,6 +82,21 @@ const EditDialog: React.FC<{
                 <FormItem className="grid grid-cols-4 items-center gap-4">
                   <FormLabel htmlFor="weight" className="text-right">
                     体重(kg)
+                  </FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} className="col-span-3" />
+                  </FormControl>
+                  <FormMessage className="col-span-3 col-start-2" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="bmi"
+              render={({ field }) => (
+                <FormItem className="grid grid-cols-4 items-center gap-4">
+                  <FormLabel htmlFor="bmi" className="text-right">
+                    BMI
                   </FormLabel>
                   <FormControl>
                     <Input type="number" {...field} className="col-span-3" />

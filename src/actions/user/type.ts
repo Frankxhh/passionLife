@@ -17,6 +17,7 @@ export const editUserInfoSchema = z.object({
     .max(500, {
       message: '体重不能超过500kg',
     }),
+  bmi: z.coerce.number().min(1, { message: 'BMI必须大于0' }).max(100, { message: 'BMI不能超过100' }),
 });
 
 export type EditUserInfoSchema = z.infer<typeof editUserInfoSchema>;
