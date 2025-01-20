@@ -24,20 +24,28 @@ export const editUserInfoAction = withAuth<EditUserInfoSchema, ServerResponse<vo
       throw new Error('Invalid input data');
     }
 
-    // 执行更新操作 若该用户不存在则进行新增
-    const updatedUser = await db.userInfo.upsert({
-      where: {
-        id: userId,
-      },
-      update: result.data, // 使用验证后的数据
-      create: {
-        ...result.data,
-        id: userId,
-      },
-    });
+    // 使用事务同时更新用户信息和记录历史数据
+    await db.$transaction(async tx => {
+      // 更新用户信息
+      await tx.userInfo.upsert({
+        where: {
+          id: userId,
+        },
+        update: result.data,
+        create: {
+          ...result.data,
+          id: userId,
+        },
+      });
 
-    if (!updatedUser) {
-      throw new Error('Failed to update user info');
-    }
+      // 记录历史数据
+      await tx.userInfoHistory.create({
+        data: {
+          userId,
+          weight: result.data.weight,
+          bmi: result.data.bmi,
+        },
+      });
+    });
   });
 });
