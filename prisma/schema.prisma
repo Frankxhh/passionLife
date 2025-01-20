@@ -32,15 +32,13 @@ model UserTarget {
 }
 
 // 用户身体数据历史记录
-model UserWeightHistory {
+model UserInfoHistory {
   id        String   @id @default(cuid())
   userId    String   // clerk返回的用户id
   weight    Float    // 体重(kg)
   bmi       Float   // 当时的BMI
-  date      DateTime @default(now()) // 记录日期
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId, date]) // 添加复合索引优化查询性能
+  recordedAt      DateTime @default(now()) // 记录日期
+  
+  @@index([userId, recordedAt]) // 添加复合索引优化查询性能
 }
 
