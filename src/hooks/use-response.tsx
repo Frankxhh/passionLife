@@ -3,11 +3,11 @@ import { type ServerResponse } from '@/actions/middleware/response';
 import { useToast } from './use-toast';
 import { useCallback } from 'react';
 
-export const useHandleClientResponse = <T,>() => {
+export const useHandleClientResponse = () => {
   const { toast } = useToast();
 
   return useCallback(
-    async (
+    async <T,>(
       promise: Promise<ServerResponse<T>>,
       options?: {
         showSuccessMessage?: boolean;
