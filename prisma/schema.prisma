@@ -14,9 +14,20 @@ datasource db {
 model UserInfo {
   id        String   @id // clerk返回的用户id
   height    Float? // 身高(cm)
-  weight    Float? // 体重(kg)
+  weight    Float? // 体重(g)
   bmi       Float? // 体重指数
   compare   Float? // 对比昨天
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+// 用户目标模型
+model UserTarget {
+  id                    String   @id // clerk返回的用户id
+  weeklyTrainingTarget  Int      // 每周目标训练次数
+  weeklyDietTarget      Int      // 每周目标饮食达标次数
+  targetWeight          Float    // 目标体重(g)
+  targetBMI             Float    // 目标BMI
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
