@@ -1,9 +1,19 @@
 'use server';
 
 import { withAuth } from '../middleware/auth';
-import { editUserInfoSchema, type EditUserInfoSchema } from './type';
+import { editUserInfoSchema, type GetUserInfoSchema, type EditUserInfoSchema } from './type';
 import { handleServerAction, type ServerResponse } from '../middleware/response';
 import { db } from '@/server/db';
+
+// 获取用户信息
+export const getUserInfoAction = withAuth<void, ServerResponse<GetUserInfoSchema | null>>(async userId => {
+  return handleServerAction(async () => {
+    const userInfo = await db.userInfo.findUnique({
+      where: { id: userId },
+    });
+    return userInfo;
+  });
+});
 
 // 编辑用户信息
 export const editUserInfoAction = withAuth<EditUserInfoSchema, ServerResponse<void>>(async (userId, data) => {
