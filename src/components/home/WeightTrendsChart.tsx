@@ -1,12 +1,25 @@
 'use client';
+import { getUserWeekTrendAction } from '@/actions/user';
+import { type GetUserWeekTrendSchema } from '@/actions/user/type';
+import { useHandleClientResponse } from '@/hooks/use-response';
 import ReactECharts from 'echarts-for-react';
-
+import { useEffect, useState } from 'react';
 const WeightTrendsChart: React.FC = () => {
+  const handleClientResponse = useHandleClientResponse();
+
+  const [userWeekTrend, setUserWeekTrend] = useState<GetUserWeekTrendSchema | null>(null);
+
+  useEffect(() => {
+    handleClientResponse<GetUserWeekTrendSchema | null>(getUserWeekTrendAction()).then(data => {
+      setUserWeekTrend(data);
+    });
+  }, []);
+
   const options = {
     grid: { top: 4, right: 0, bottom: 24, left: 0 },
     xAxis: {
       type: 'category',
-      data: ['今', '二', '三', '四', '五', '六', '日'],
+      data: userWeekTrend?.weight.statics.map(item => item.viewName),
       axisTick: {
         show: false, // 隐藏 Y 轴刻度线
       },
@@ -32,7 +45,7 @@ const WeightTrendsChart: React.FC = () => {
     },
     series: [
       {
-        data: [120, 200, 150, 80, 70, 110, 130],
+        data: userWeekTrend?.weight.statics.map(item => item.value),
         type: 'bar',
         itemStyle: {
           color: '#4096ef',
@@ -45,7 +58,7 @@ const WeightTrendsChart: React.FC = () => {
         },
       },
       {
-        data: [20, 23, 17, 19, 21, 20, 18],
+        data: userWeekTrend?.bmi.statics.map(item => item.value),
         type: 'line',
         itemStyle: {
           color: '#ec744a',

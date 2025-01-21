@@ -1,7 +1,13 @@
 'use server';
 
 import { withAuth } from '../middleware/auth';
-import { editUserInfoSchema, type GetUserInfoSchema, type EditUserInfoSchema } from './type';
+import {
+  editUserInfoSchema,
+  type GetUserInfoSchema,
+  type EditUserInfoSchema,
+  type GetUserWeekTrendSchema,
+  type GetUserWeekTrendSchemaItem,
+} from './type';
 import { handleServerAction, type ServerResponse } from '../middleware/response';
 import { db } from '@/server/db';
 import dayjs from 'dayjs';
@@ -68,5 +74,56 @@ export const editUserInfoAction = withAuth<EditUserInfoSchema, ServerResponse<vo
         },
       });
     });
+  });
+});
+
+// 获取用户一周身体趋势
+export const getUserWeekTrendAction = withAuth<void, ServerResponse<GetUserWeekTrendSchema | null>>(async userId => {
+  return handleServerAction(async () => {
+    // 获取本周的开始和结束时间
+    const startOfWeek = dayjs().startOf('week').add(1, 'day');
+    const endOfWeek = dayjs().endOf('week').add(1, 'day');
+
+    // 查询本周每天最后一条记录
+    const records = await db.$queryRaw<GetUserWeekTrendSchemaItem[]>`
+      WITH RankedRecords AS (
+        SELECT *,
+          DATE("recordedAt") as "recordDate",
+          ROW_NUMBER() OVER (PARTITION BY DATE("recordedAt") ORDER BY "recordedAt" DESC) as "rn"
+        FROM "UserInfoHistory"
+        WHERE "userId" = ${userId}
+          AND "recordedAt" >= ${startOfWeek.toDate()}
+          AND "recordedAt" <= ${endOfWeek.toDate()}
+      )
+      SELECT * FROM RankedRecords WHERE rn = 1
+      ORDER BY "recordDate" ASC
+    `;
+
+    const currentWeekData = (type: 'weight' | 'bmi') => {
+      // 创建完整的一周数据
+      const fullWeekData = Array.from({ length: 7 }, (_, index) => {
+        const currentDate = startOfWeek.add(index, 'day');
+        const record = records.find(r => dayjs(r.recordedAt).format('YYYY-MM-DD') === currentDate.format('YYYY-MM-DD'));
+
+        const dayMap = ['日', '一', '二', '三', '四', '五', '六'];
+        return {
+          // 格式化为周几
+          date: currentDate.toDate(),
+          value: record ? (type === 'weight' ? record.weight : record.bmi) : null,
+          viewName: dayMap[currentDate.day()]!,
+        };
+      });
+      const validValues = fullWeekData.map(item => item.value).filter((value): value is number => value !== null);
+      return {
+        maxValue: validValues.length ? Math.max(...validValues) : 0,
+        minValue: validValues.length ? Math.min(...validValues) : 0,
+        statics: fullWeekData,
+      };
+    };
+
+    return {
+      weight: currentWeekData('weight'),
+      bmi: currentWeekData('bmi'),
+    };
   });
 });

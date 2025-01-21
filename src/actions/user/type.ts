@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { type ChartData } from '../baseType';
 
 export const editUserInfoSchema = z.object({
   height: z.coerce
@@ -32,3 +33,16 @@ export interface GetUserInfoSchema {
   createdAt: Date;
   updatedAt: Date;
 }
+
+// 查询用户一周身体数据趋势
+export interface GetUserWeekTrendSchemaItem {
+  id: string;
+  userId: string;
+  weight: number;
+  bmi: number;
+  recordedAt: Date;
+}
+export type GetUserWeekTrendSchema = {
+  weight: ChartData;
+  bmi: ChartData;
+};
