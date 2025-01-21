@@ -11,6 +11,7 @@ import {
 import { handleServerAction, type ServerResponse } from '../middleware/response';
 import { db } from '@/server/db';
 import dayjs from 'dayjs';
+import { revalidatePath } from 'next/cache';
 // 获取用户信息
 export const getUserInfoAction = withAuth<void, ServerResponse<GetUserInfoSchema | null>>(async userId => {
   return handleServerAction(async () => {
@@ -73,6 +74,7 @@ export const editUserInfoAction = withAuth<EditUserInfoSchema, ServerResponse<vo
           bmi: result.data.bmi,
         },
       });
+      revalidatePath('/');
     });
   });
 });

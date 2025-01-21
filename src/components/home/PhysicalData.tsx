@@ -12,21 +12,18 @@ import {
 import { Button } from '../ui/button';
 import { Input } from '@/components/ui/input';
 import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
-import { useHandleClientResponse } from '@/hooks/use-response';
-import { editUserInfoAction, getUserInfoAction } from '@/actions/user';
+import { editUserInfoAction } from '@/actions/user';
 import { type EditUserInfoSchema, editUserInfoSchema, type GetUserInfoSchema } from '@/actions/user/type';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useHandleClientResponse } from '@/hooks/use-response';
 
 const EditDialog: React.FC<{
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  toGetUserInfo: () => void;
   userInfo: GetUserInfoSchema | null;
-}> = ({ open, setOpen, toGetUserInfo, userInfo }) => {
-  const handleClientResponse = useHandleClientResponse();
-
+}> = ({ open, setOpen, userInfo }) => {
   useEffect(() => {
     if (userInfo) {
       form.reset({
@@ -47,18 +44,11 @@ const EditDialog: React.FC<{
   });
 
   const handleSubmit = async (data: EditUserInfoSchema) => {
-    await handleClientResponse(
-      editUserInfoAction({
-        height: data.height,
-        weight: data.weight,
-        bmi: data.bmi,
-      }),
-      {
-        showSuccessMessage: true,
-        successMessage: '保存成功',
-      },
-    );
-    toGetUserInfo();
+    await editUserInfoAction({
+      height: data.height,
+      weight: data.weight,
+      bmi: data.bmi,
+    });
     setOpen(false);
   };
 
@@ -128,21 +118,15 @@ const EditDialog: React.FC<{
   );
 };
 
-const PhysicalData = () => {
+interface PhysicalDataProps {
+  userInfo: GetUserInfoSchema | null;
+  message: string | null;
+}
+
+const PhysicalData = ({ userInfo, message }: PhysicalDataProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const handleClientResponse = useHandleClientResponse();
+  useHandleClientResponse(message);
 
-  useEffect(() => {
-    toGetUserInfo();
-  }, []);
-
-  const [userInfo, setUserInfo] = useState<GetUserInfoSchema | null>(null);
-
-  const toGetUserInfo = async () => {
-    await handleClientResponse<GetUserInfoSchema | null>(getUserInfoAction()).then(res => {
-      setUserInfo(res);
-    });
-  };
   return (
     <>
       <div className={'relative mb-2 flex h-32 flex-row items-end px-1'}>
@@ -180,7 +164,7 @@ const PhysicalData = () => {
           <span>{userInfo?.bmi ?? '-'}</span>
         </div>
       </div>
-      <EditDialog open={isOpen} userInfo={userInfo} setOpen={setIsOpen} toGetUserInfo={toGetUserInfo} />
+      <EditDialog open={isOpen} userInfo={userInfo} setOpen={setIsOpen} />
     </>
   );
 };

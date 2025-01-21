@@ -1,20 +1,13 @@
 'use client';
-import { getUserWeekTrendAction } from '@/actions/user';
 import { type GetUserWeekTrendSchema } from '@/actions/user/type';
 import { useHandleClientResponse } from '@/hooks/use-response';
 import ReactECharts from 'echarts-for-react';
-import { useEffect, useState } from 'react';
-const WeightTrendsChart: React.FC = () => {
-  const handleClientResponse = useHandleClientResponse();
-
-  const [userWeekTrend, setUserWeekTrend] = useState<GetUserWeekTrendSchema | null>(null);
-
-  useEffect(() => {
-    handleClientResponse<GetUserWeekTrendSchema | null>(getUserWeekTrendAction()).then(data => {
-      setUserWeekTrend(data);
-    });
-  }, []);
-
+interface WeightTrendsChartProps {
+  userWeekTrend: GetUserWeekTrendSchema | null;
+  message: string | null;
+}
+const WeightTrendsChart: React.FC<WeightTrendsChartProps> = ({ userWeekTrend, message }) => {
+  useHandleClientResponse(message);
   const options = {
     grid: { top: 4, right: 0, bottom: 24, left: 0 },
     xAxis: {

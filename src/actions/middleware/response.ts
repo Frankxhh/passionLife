@@ -1,7 +1,7 @@
 export type ServerResponse<T = any> = {
   code: number;
   success: boolean;
-  message: string;
+  message: string | null;
   data?: T | null;
 };
 
@@ -11,7 +11,7 @@ export const handleServerAction = async <T>(action: () => Promise<T>): Promise<S
     return {
       code: 200,
       success: true,
-      message: 'success',
+      message: null,
       data: result,
     };
   } catch (error) {

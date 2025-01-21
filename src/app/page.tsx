@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import PhysicalData from '@/components/home/PhysicalData';
 import WeightTrendsChart from '@/components/home/WeightTrendsChart';
 import TargetCard from '@/components/home/TargetCard';
+import { getUserInfoAction, getUserWeekTrendAction } from '@/actions/user';
 
 function Fallback() {
   return <Skeleton className="h-[180px] w-full" />;
@@ -28,13 +29,15 @@ const targetList: TargetListItem[] = [
   },
 ];
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+  const userInfo = await getUserInfoAction();
+  const userWeekTrend = await getUserWeekTrendAction();
   return (
     <div className={'h-full w-full p-4'}>
       <Suspense fallback={<Fallback />}>
         <Card className={'mb-4 bg-gradient-to-b from-[#69B1FF] to-[#1677ff] text-white'}>
           <CardContent className={'px-4 pb-4 pt-2'}>
-            <PhysicalData />
+            <PhysicalData userInfo={userInfo.data ?? null} message={userInfo.message} />
           </CardContent>
         </Card>
       </Suspense>
@@ -47,7 +50,7 @@ export default function ProfilePage() {
             </CardTitle>
           </CardHeader>
           <CardContent className={'p-4'}>
-            <WeightTrendsChart />
+            <WeightTrendsChart userWeekTrend={userWeekTrend.data ?? null} message={userWeekTrend.message} />
           </CardContent>
         </Card>
       </Suspense>
