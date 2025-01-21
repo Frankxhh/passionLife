@@ -43,13 +43,13 @@ export default async function ProfilePage() {
       </Suspense>
       <Suspense fallback={<Fallback />}>
         <Card className={'mb-4'}>
-          <CardHeader className={'p-4'}>
+          <CardHeader className={'px-4 py-4 pb-0'}>
             <CardTitle className={'flex justify-between'}>
               <span>趋势</span>
               <span>周报</span>
             </CardTitle>
           </CardHeader>
-          <CardContent className={'p-4'}>
+          <CardContent className={'p-4 py-0'}>
             <WeightTrendsChart userWeekTrend={userWeekTrend.data ?? null} message={userWeekTrend.message} />
           </CardContent>
         </Card>

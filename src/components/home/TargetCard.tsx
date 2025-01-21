@@ -12,7 +12,7 @@ const TargetCard: React.FC<{ targetItem: TargetListItem }> = ({ targetItem }) =>
     return () => clearTimeout(timer);
   }, []);
   return (
-    <Card className={'relative mb-4'}>
+    <Card className={'relative mt-4'}>
       <CardHeader className={'p-4'}>
         <CardTitle>{targetItem.title}</CardTitle>
         <CardDescription>已完成2/4次{targetItem.description}</CardDescription>

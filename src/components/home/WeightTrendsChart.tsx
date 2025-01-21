@@ -9,7 +9,11 @@ interface WeightTrendsChartProps {
 const WeightTrendsChart: React.FC<WeightTrendsChartProps> = ({ userWeekTrend, message }) => {
   useHandleClientResponse(message);
   const options = {
-    grid: { top: 4, right: 0, bottom: 24, left: 0 },
+    legend: {
+      data: ['体重', 'BMI'],
+      top: 0,
+    },
+    grid: { top: 20, right: 0, bottom: 24, left: 0 },
     xAxis: {
       type: 'category',
       data: userWeekTrend?.weight.statics.map(item => item.viewName),
@@ -38,6 +42,7 @@ const WeightTrendsChart: React.FC<WeightTrendsChartProps> = ({ userWeekTrend, me
     },
     series: [
       {
+        name: '体重',
         data: userWeekTrend?.weight.statics.map(item => item.value),
         type: 'bar',
         itemStyle: {
@@ -51,16 +56,22 @@ const WeightTrendsChart: React.FC<WeightTrendsChartProps> = ({ userWeekTrend, me
         },
       },
       {
+        name: 'BMI',
         data: userWeekTrend?.bmi.statics.map(item => item.value),
         type: 'line',
         itemStyle: {
-          color: '#ec744a',
+          color: '#8befac',
+        },
+        label: {
+          show: true,
+          position: 'top',
+          color: '#8befac',
         },
       },
     ],
   };
 
-  return <ReactECharts style={{ height: '8rem' }} option={options} />;
+  return <ReactECharts style={{ height: '9rem' }} option={options} />;
 };
 
 export default WeightTrendsChart;
