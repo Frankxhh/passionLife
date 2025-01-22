@@ -18,12 +18,14 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useHandleClientResponse } from '@/hooks/use-response';
+import { useToast } from '@/hooks/use-toast';
 
 const EditDialog: React.FC<{
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   userInfo: GetUserInfoSchema | null;
 }> = ({ open, setOpen, userInfo }) => {
+  const { toast } = useToast();
   useEffect(() => {
     if (userInfo) {
       form.reset({
@@ -35,11 +37,6 @@ const EditDialog: React.FC<{
   }, [userInfo]);
 
   const form = useForm({
-    defaultValues: {
-      height: 0,
-      weight: 0,
-      bmi: 0,
-    },
     resolver: zodResolver(editUserInfoSchema),
   });
 
@@ -50,6 +47,10 @@ const EditDialog: React.FC<{
       bmi: data.bmi,
     });
     setOpen(false);
+    toast({
+      title: '保存成功',
+      description: '您的身体数据已成功保存',
+    });
   };
 
   return (
