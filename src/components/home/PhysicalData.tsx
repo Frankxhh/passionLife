@@ -36,7 +36,7 @@ const EditDialog: React.FC<{
     }
   }, [userInfo]);
 
-  const form = useForm({
+  const form = useForm<EditUserInfoSchema>({
     resolver: zodResolver(editUserInfoSchema),
   });
 
