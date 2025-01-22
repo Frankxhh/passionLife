@@ -126,7 +126,6 @@ interface PhysicalDataProps {
 const PhysicalData = ({ userInfo, message }: PhysicalDataProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   useHandleClientResponse(message);
-
   return (
     <>
       <div className={'relative mb-2 flex h-32 flex-row items-end px-1'}>
@@ -139,7 +138,7 @@ const PhysicalData = ({ userInfo, message }: PhysicalDataProps) => {
             <span className={'text-[4rem]'}>{userInfo?.weight ?? '-'}</span>
             <span className={'ml-1 mt-4'}>公斤</span>
           </div>
-          <span className={'text-sm'}>今天 08:52</span>
+          <span className={'text-sm'}>{userInfo?.recordedAt ?? '-'}</span>
         </div>
         {/*对比昨天*/}
         <div className={'mr-14 flex flex-col items-center'}>

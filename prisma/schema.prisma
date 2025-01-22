@@ -10,16 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// 用户基本信息模型
-model UserInfo {
-  id        String   @id // clerk返回的用户id
-  height    Float // 身高(cm)
-  weight    Float // 体重(g)
-  bmi       Float // 体重指数
-  compare   Float? // 对比昨天
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
 // 用户目标模型
 model UserTarget {
   id                    String   @id // clerk返回的用户id
@@ -35,9 +25,11 @@ model UserTarget {
 model UserInfoHistory {
   id        String   @id @default(cuid())
   userId    String   // clerk返回的用户id
+  height    Float    // 身高(cm)
   weight    Float    // 体重(kg)
   bmi       Float   // 当时的BMI
   recordedAt      DateTime @default(now()) // 记录日期
+  updatedAt       DateTime @updatedAt
   
   @@index([userId, recordedAt]) // 添加复合索引优化查询性能
 }

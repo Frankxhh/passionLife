@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "UserInfoHistory" ADD COLUMN     "height" DOUBLE PRECISION NOT NULL DEFAULT 185,
+ADD COLUMN     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+
+-- DropTable (强制删除表，即使有数据)
+DROP TABLE IF EXISTS "UserInfo" CASCADE;

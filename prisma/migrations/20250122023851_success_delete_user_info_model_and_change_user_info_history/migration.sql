@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "UserInfoHistory" ALTER COLUMN "height" DROP DEFAULT,
+ALTER COLUMN "updatedAt" DROP DEFAULT;

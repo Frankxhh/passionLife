@@ -26,11 +26,12 @@ export type EditUserInfoSchema = z.infer<typeof editUserInfoSchema>;
 // 查询用户信息的返回类型
 export interface GetUserInfoSchema {
   id: string;
-  height: number | null;
-  weight: number | null;
-  bmi: number | null;
+  userId: string;
+  height: number;
+  weight: number;
+  bmi: number;
   compare: number | null;
-  createdAt: Date;
+  recordedAt: string;
   updatedAt: Date;
 }
 

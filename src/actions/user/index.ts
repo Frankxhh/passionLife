@@ -15,9 +15,12 @@ import { revalidatePath } from 'next/cache';
 // 获取用户信息
 export const getUserInfoAction = withAuth<void, ServerResponse<GetUserInfoSchema | null>>(async userId => {
   return handleServerAction(async () => {
-    // 获取用户当前信息
-    const userInfo = await db.userInfo.findUnique({
-      where: { id: userId },
+    // 获取用户当前最新一条信息(如果今日没有记录，则获取昨天的记录/界面上显示为昨日信息)
+    const userInfo = await db.userInfoHistory.findFirst({
+      where: {
+        userId,
+      },
+      orderBy: { recordedAt: 'desc' },
     });
 
     // 获取昨天的历史记录
@@ -34,12 +37,21 @@ export const getUserInfoAction = withAuth<void, ServerResponse<GetUserInfoSchema
       },
     });
 
-    // 如果找到昨天的记录，计算差值
-    if (userInfo && yesterdayRecord) {
-      userInfo.compare = userInfo.weight - yesterdayRecord.weight;
+    if (!userInfo) {
+      return null;
     }
+    // 判断是否为今天
+    const isToday = dayjs(userInfo.recordedAt).isSame(dayjs(), 'day');
+    const recordedAt = isToday
+      ? dayjs(userInfo.recordedAt).format('HH:mm')
+      : dayjs(userInfo.recordedAt).format('YYYY-MM-DD HH:mm');
+    const compare = isToday ? (userInfo?.weight ?? 0) - (yesterdayRecord?.weight ?? 0) : null;
 
-    return userInfo;
+    return {
+      ...userInfo,
+      recordedAt,
+      compare,
+    };
   });
 });
 
@@ -52,30 +64,16 @@ export const editUserInfoAction = withAuth<EditUserInfoSchema, ServerResponse<vo
       throw new Error('Invalid input data');
     }
 
-    // 使用事务同时更新用户信息和记录历史数据
-    await db.$transaction(async tx => {
-      // 更新用户信息
-      await tx.userInfo.upsert({
-        where: {
-          id: userId,
-        },
-        update: result.data,
-        create: {
-          ...result.data,
-          id: userId,
-        },
-      });
-
-      // 记录历史数据
-      await tx.userInfoHistory.create({
-        data: {
-          userId,
-          weight: result.data.weight,
-          bmi: result.data.bmi,
-        },
-      });
-      revalidatePath('/');
+    // 记录历史数据
+    await db.userInfoHistory.create({
+      data: {
+        userId,
+        weight: result.data.weight,
+        bmi: result.data.bmi,
+        height: result.data.height,
+      },
     });
+    revalidatePath('/');
   });
 });
 
