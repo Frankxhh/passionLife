@@ -38,6 +38,11 @@ const EditDialog: React.FC<{
 
   const form = useForm<EditUserInfoSchema>({
     resolver: zodResolver(editUserInfoSchema),
+    defaultValues: {
+      height: 0,
+      weight: 0,
+      bmi: 0,
+    },
   });
 
   const handleSubmit = async (data: EditUserInfoSchema) => {
