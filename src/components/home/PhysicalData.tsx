@@ -27,11 +27,11 @@ const EditDialog: React.FC<{
 }> = ({ open, setOpen, userInfo }) => {
   const { toast } = useToast();
   useEffect(() => {
-    if (open && userInfo) {
+    if (open) {
       form.reset({
-        height: userInfo.height ?? 0,
-        weight: userInfo.weight ?? 0,
-        bmi: userInfo.bmi ?? 0,
+        height: userInfo?.height ?? 0,
+        weight: userInfo?.weight ?? 0,
+        bmi: userInfo?.bmi ?? 0,
       });
     }
   }, [open, userInfo]);
