@@ -45,7 +45,7 @@ export const getUserInfoAction = withAuth<void, ServerResponse<GetUserInfoSchema
     const recordedAt = isToday
       ? dayjs(userInfo.recordedAt).format('HH:mm')
       : dayjs(userInfo.recordedAt).format('YYYY-MM-DD HH:mm');
-    const compare = isToday ? (userInfo?.weight ?? 0) - (yesterdayRecord?.weight ?? 0) : null;
+    const compare = isToday && yesterdayRecord ? (userInfo?.weight ?? 0) - (yesterdayRecord?.weight ?? 0) : null;
 
     return {
       ...userInfo,
