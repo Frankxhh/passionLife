@@ -39,7 +39,7 @@ const BreadContent: React.FC = () => {
   return (
     <div className="flex flex-1 flex-row items-center justify-between gap-2">
       {user?.id && <SetTarget userTarget={userTarget} toGetUserTarget={toGetUserTarget} />}
-      {!userTarget && (
+      {user?.id && !userTarget && (
         <Popover>
           <PopoverTrigger asChild>
             <CircleAlert size={18} className="mt-1 text-red-500" />
