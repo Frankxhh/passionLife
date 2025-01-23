@@ -122,7 +122,9 @@ const SetTarget: React.FC<{ userTarget: GetUserTargetSchema | null; toGetUserTar
                 )}
               />
               <DrawerFooter>
-                <Button type="submit">保存目标</Button>
+                <Button type="submit" disabled={form.formState.isSubmitting}>
+                  保存目标
+                </Button>
                 <DrawerClose asChild>
                   <Button variant="outline">取消</Button>
                 </DrawerClose>
