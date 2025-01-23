@@ -156,14 +156,14 @@ const PhysicalData = ({ userInfo, message }: PhysicalDataProps) => {
         <div className={'flex flex-col gap-1'}>
           <div className={'flex items-end'}>
             <span className={'mr-1'}>身高</span>
-            <Badge className={'text-xs'}>正常</Badge>
+            {/*<Badge className={'text-xs'}>正常</Badge>*/}
           </div>
           <span>{userInfo?.height ?? '-'}cm</span>
         </div>
         <div className={'flex flex-col gap-1'}>
           <div className={'flex items-end'}>
             <span className={'mr-1'}>BMI</span>
-            <Badge className={'text-xs'}>正常</Badge>
+            {/*<Badge className={'text-xs'}>正常</Badge>*/}
           </div>
           <span>{userInfo?.bmi ?? '-'}</span>
         </div>
