@@ -17,10 +17,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { type GetUserTargetSchema, targetFormSchema, type TargetFormSchema } from '@/actions/userTarget/type';
 import { setUserTargetAction } from '@/actions/userTarget';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
-const SetTarget: React.FC<{ userTarget: GetUserTargetSchema | null }> = ({ userTarget }) => {
+const SetTarget: React.FC<{ userTarget: GetUserTargetSchema | null; toGetUserTarget: () => void }> = ({
+  userTarget,
+  toGetUserTarget,
+}) => {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
 
@@ -46,6 +49,7 @@ const SetTarget: React.FC<{ userTarget: GetUserTargetSchema | null }> = ({ userT
 
   const onSubmit = async (data: TargetFormSchema) => {
     await setUserTargetAction(data);
+    toGetUserTarget();
     setOpen(false);
     toast({
       title: '保存成功',
@@ -131,4 +135,4 @@ const SetTarget: React.FC<{ userTarget: GetUserTargetSchema | null }> = ({ userT
   );
 };
 
-export default SetTarget;
+export default memo(SetTarget);

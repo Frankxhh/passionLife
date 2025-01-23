@@ -4,8 +4,8 @@ import { useUser } from '@clerk/nextjs';
 import SetTarget from './SetTarget';
 import { UserButton } from '@clerk/nextjs';
 import ToggleMode from '@/components/Theme/ToggleMode';
-import { useEffect, useState } from 'react';
-import { GetUserTargetSchema } from '@/actions/userTarget/type';
+import { useCallback, useEffect, useState } from 'react';
+import { type GetUserTargetSchema } from '@/actions/userTarget/type';
 import { getUserTargetAction } from '@/actions/userTarget';
 import { useToast } from '@/hooks/use-toast';
 import { CircleAlert } from 'lucide-react';
@@ -15,7 +15,7 @@ const BreadContent: React.FC = () => {
   const { user } = useUser();
   const [userTarget, setUserTarget] = useState<GetUserTargetSchema | null>(null);
   const { toast } = useToast();
-  useEffect(() => {
+  const toGetUserTarget = useCallback(async () => {
     if (user?.id) {
       getUserTargetAction()
         .then(res => {
@@ -29,9 +29,16 @@ const BreadContent: React.FC = () => {
         });
     }
   }, [user]);
+
+  useEffect(() => {
+    if (user?.id) {
+      toGetUserTarget();
+    }
+  }, [user]);
+
   return (
     <div className="flex flex-1 flex-row items-center justify-between gap-2">
-      <SetTarget userTarget={userTarget} />
+      <SetTarget userTarget={userTarget} toGetUserTarget={toGetUserTarget} />
       {!userTarget && (
         <Popover>
           <PopoverTrigger asChild>
