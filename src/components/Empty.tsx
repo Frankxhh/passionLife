@@ -2,9 +2,9 @@
 import Image from 'next/image';
 const Empty = () => {
   return (
-    <div className="pb-4 text-center">
+    <div className="flex h-full w-full items-center justify-center pb-4 text-center">
       <Image
-        className={'h-auto w-full'}
+        className={'h-auto w-full md:max-w-md'}
         width={0}
         height={0}
         src={`/image/empty.png`}
