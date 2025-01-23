@@ -99,6 +99,10 @@ export const getUserWeekTrendAction = withAuth<void, ServerResponse<GetUserWeekT
       ORDER BY "recordDate" ASC
     `;
 
+    if (!records.length) {
+      return null;
+    }
+
     const currentWeekData = (type: 'weight' | 'bmi') => {
       // 创建完整的一周数据
       const fullWeekData = Array.from({ length: 7 }, (_, index) => {
