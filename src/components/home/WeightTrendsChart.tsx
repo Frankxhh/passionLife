@@ -2,12 +2,16 @@
 import { type GetUserWeekTrendSchema } from '@/actions/user/type';
 import { useHandleClientResponse } from '@/hooks/use-response';
 import ReactECharts from 'echarts-for-react';
+import Empty from '../Empty';
 interface WeightTrendsChartProps {
   userWeekTrend: GetUserWeekTrendSchema | null;
   message: string | null;
 }
 const WeightTrendsChart: React.FC<WeightTrendsChartProps> = ({ userWeekTrend, message }) => {
   useHandleClientResponse(message);
+  if (!userWeekTrend) {
+    return <Empty />;
+  }
   const options = {
     legend: {
       data: ['体重', 'BMI'],
