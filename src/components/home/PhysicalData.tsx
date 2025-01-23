@@ -111,13 +111,13 @@ const EditDialog: React.FC<{
                 </FormItem>
               )}
             />
+            <DialogFooter>
+              <Button type="submit" disabled={form.formState.isSubmitting}>
+                保存更改
+              </Button>
+            </DialogFooter>
           </form>
         </Form>
-        <DialogFooter>
-          <Button type="submit" onClick={form.handleSubmit(handleSubmit)} disabled={form.formState.isSubmitting}>
-            保存更改
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
