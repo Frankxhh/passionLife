@@ -11,10 +11,10 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '../ui/button';
 import { Input } from '@/components/ui/input';
-import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
+import { type Dispatch, type SetStateAction, useEffect, useMemo, useState } from 'react';
 import { editUserInfoAction } from '@/actions/user';
 import { type EditUserInfoSchema, editUserInfoSchema, type GetUserInfoSchema } from '@/actions/user/type';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useHandleClientResponse } from '@/hooks/use-response';
@@ -56,6 +56,16 @@ const EditDialog: React.FC<{
       title: '保存成功',
     });
   };
+
+  // BMI推算
+  const bmiMemo = useMemo(() => {
+    const weight = form.watch('weight');
+    const height = form.watch('height');
+    if (weight && height) {
+      return (weight / (height / 100) ** 2).toFixed(2);
+    }
+    return '-';
+  }, [form.watch('weight'), form.watch('height')]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -100,13 +110,14 @@ const EditDialog: React.FC<{
               control={form.control}
               name="bmi"
               render={({ field }) => (
-                <FormItem className="grid grid-cols-4 items-center gap-4">
+                <FormItem className="grid grid-cols-4 items-center gap-x-4">
                   <FormLabel htmlFor="bmi" className="text-right">
                     BMI
                   </FormLabel>
                   <FormControl>
                     <Input type="number" {...field} className="col-span-3" />
                   </FormControl>
+                  <FormDescription className="col-span-3 col-start-2">BMI推算: {bmiMemo}</FormDescription>
                   <FormMessage className="col-span-3 col-start-2" />
                 </FormItem>
               )}
