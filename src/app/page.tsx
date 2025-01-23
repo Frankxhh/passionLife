@@ -5,6 +5,7 @@ import PhysicalData from '@/components/home/PhysicalData';
 import WeightTrendsChart from '@/components/home/WeightTrendsChart';
 import TargetCard from '@/components/home/TargetCard';
 import { getUserInfoAction, getUserWeekTrendAction } from '@/actions/user';
+import { getUserTargetAction } from '@/actions/userTarget';
 
 function Fallback() {
   return <Skeleton className="h-[180px] w-full" />;
@@ -32,6 +33,7 @@ const targetList: TargetListItem[] = [
 export default async function ProfilePage() {
   const userInfo = await getUserInfoAction();
   const userWeekTrend = await getUserWeekTrendAction();
+  const userTarget = await getUserTargetAction();
   return (
     <div className={'h-full w-full p-4'}>
       <Suspense fallback={<Fallback />}>
@@ -56,7 +58,7 @@ export default async function ProfilePage() {
       </Suspense>
       <Suspense fallback={<Fallback />}>
         {targetList.map(item => (
-          <TargetCard key={item.title} targetItem={item} />
+          <TargetCard key={item.title} targetItem={item} userTarget={userTarget.data ?? null} />
         ))}
       </Suspense>
     </div>

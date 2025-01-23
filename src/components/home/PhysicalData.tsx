@@ -27,14 +27,14 @@ const EditDialog: React.FC<{
 }> = ({ open, setOpen, userInfo }) => {
   const { toast } = useToast();
   useEffect(() => {
-    if (userInfo) {
+    if (open && userInfo) {
       form.reset({
         height: userInfo.height ?? 0,
         weight: userInfo.weight ?? 0,
         bmi: userInfo.bmi ?? 0,
       });
     }
-  }, [userInfo]);
+  }, [open, userInfo]);
 
   const form = useForm<EditUserInfoSchema>({
     resolver: zodResolver(editUserInfoSchema),
@@ -49,7 +49,6 @@ const EditDialog: React.FC<{
     setOpen(false);
     toast({
       title: '保存成功',
-      description: '您的身体数据已成功保存',
     });
   };
 
