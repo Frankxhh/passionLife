@@ -1,14 +1,10 @@
-'use client';
 import { AppSidebar } from './components/Sidebar';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { UserButton, useUser } from '@clerk/nextjs';
-import ToggleMode from '@/components/Theme/ToggleMode';
-import SetTarget from './components/SetTarget';
+import BreadContent from './components/BreadContent';
 
-function LayoutPage({ children }: { children: React.ReactNode }) {
-  const { user, isLoaded } = useUser();
+const LayoutPage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <>
       <SidebarProvider>
@@ -17,25 +13,20 @@ function LayoutPage({ children }: { children: React.ReactNode }) {
           <header className="sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
-            <Breadcrumb>
+            <Breadcrumb className="w-full">
               <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbPage>
-                    <SetTarget />
+                <BreadcrumbItem className="flex-1">
+                  <BreadcrumbPage className="flex-1">
+                    <BreadContent />
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
-            <div className={'ml-auto flex items-center gap-2'}>
-              <ToggleMode />
-              <UserButton />
-              <span>{user?.username}</span>
-            </div>
           </header>
           {children}
         </SidebarInset>
       </SidebarProvider>
     </>
   );
-}
+};
 export default LayoutPage;

@@ -15,34 +15,25 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { targetFormSchema, type TargetFormSchema } from '@/actions/userTarget/type';
-import { getUserTargetAction, setUserTargetAction } from '@/actions/userTarget';
+import { type GetUserTargetSchema, targetFormSchema, type TargetFormSchema } from '@/actions/userTarget/type';
+import { setUserTargetAction } from '@/actions/userTarget';
 import { useEffect, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
-const SetTarget = () => {
+const SetTarget: React.FC<{ userTarget: GetUserTargetSchema | null }> = ({ userTarget }) => {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (open) {
-      getUserTargetAction()
-        .then(res => {
-          form.reset({
-            weeklyTrainingTarget: res.data?.weeklyTrainingTarget ?? 3,
-            weeklyDietTarget: res.data?.weeklyDietTarget ?? 5,
-            targetWeight: res.data?.targetWeight ?? 65,
-            targetBMI: res.data?.targetBMI ?? 22,
-          });
-        })
-        .catch(err => {
-          toast({
-            title: err.message,
-            variant: 'destructive',
-          });
-        });
+      form.reset({
+        weeklyTrainingTarget: userTarget?.weeklyTrainingTarget ?? 3,
+        weeklyDietTarget: userTarget?.weeklyDietTarget ?? 5,
+        targetWeight: userTarget?.targetWeight ?? 65,
+        targetBMI: userTarget?.targetBMI ?? 22,
+      });
     }
-  }, [open]);
+  }, [open, userTarget]);
   const form = useForm<TargetFormSchema>({
     resolver: zodResolver(targetFormSchema),
     defaultValues: {
