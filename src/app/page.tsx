@@ -1,4 +1,3 @@
-import { Skeleton } from '@/components/ui/skeleton';
 import { Suspense } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import PhysicalData from '@/components/home/PhysicalData';
@@ -7,10 +6,8 @@ import TargetCard from '@/components/home/TargetCard';
 import { getUserInfoAction, getUserWeekTrendAction } from '@/actions/user';
 import { getUserTargetAction } from '@/actions/userTarget';
 import FallBack from '@/components/home/FallBack';
-
-function Fallback() {
-  return <Skeleton className="h-[180px] w-full" />;
-}
+import AlreadyCard from '@/components/home/AlreadyCard';
+import DrinkWater from '@/components/home/DrinkWater';
 
 export interface TargetListItem {
   key: string;
@@ -18,16 +15,37 @@ export interface TargetListItem {
   description: string;
 }
 
-const targetList: TargetListItem[] = [
+// const targetList: TargetListItem[] = [
+//   {
+//     key: 'training',
+//     title: '训练目标',
+//     description: '训练计划',
+//   },
+//   {
+//     key: 'diet',
+//     title: '营养统计',
+//     description: '饮食成就',
+//   },
+// ];
+export interface alreadyItem {
+  key: string;
+  title: string;
+  unit: string;
+  icon: string;
+}
+// 运动时间 摄入千卡
+const alreadyList: alreadyItem[] = [
   {
-    key: 'training',
-    title: '训练目标',
-    description: '训练计划',
+    key: 'exerciseTime',
+    title: '运动',
+    unit: '小时',
+    icon: 'sport',
   },
   {
-    key: 'diet',
-    title: '营养统计',
-    description: '饮食成就',
+    key: 'calories',
+    title: '摄入',
+    unit: '千卡',
+    icon: 'food',
   },
 ];
 
@@ -53,9 +71,15 @@ const ProfilePage = async () => {
           <WeightTrendsChart userWeekTrend={userWeekTrend.data ?? null} message={userWeekTrend.message} />
         </CardContent>
       </Card>
-      {targetList.map(item => (
-        <TargetCard key={item.title} targetItem={item} userTarget={userTarget.data ?? null} />
+      {/* 本周运动/摄入 */}
+      {alreadyList.map(item => (
+        <AlreadyCard key={item.key} alreadyItem={item} />
       ))}
+      {/* 饮水记录 */}
+      <DrinkWater />
+      {/* {targetList.map(item => (
+        <TargetCard key={item.title} targetItem={item} userTarget={userTarget.data ?? null} />
+      ))} */}
     </div>
   );
 };

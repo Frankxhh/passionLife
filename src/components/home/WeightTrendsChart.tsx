@@ -75,7 +75,7 @@ const WeightTrendsChart: React.FC<WeightTrendsChartProps> = ({ userWeekTrend, me
     ],
   };
 
-  return <ReactECharts style={{ height: '9rem' }} option={options} />;
+  return <ReactECharts style={{ height: '10rem' }} option={options} />;
 };
 
 export default WeightTrendsChart;
