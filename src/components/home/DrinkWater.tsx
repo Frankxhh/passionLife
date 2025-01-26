@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Card, CardContent } from '../ui/card';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 const DrinkWater = () => {
   const [water, setWater] = useState(0);
   return (

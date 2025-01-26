@@ -81,8 +81,8 @@ export const editUserInfoAction = withAuth<EditUserInfoSchema, ServerResponse<vo
 export const getUserWeekTrendAction = withAuth<void, ServerResponse<GetUserWeekTrendSchema | null>>(async userId => {
   return handleServerAction(async () => {
     // 获取本周的开始和结束时间
-    const startOfWeek = dayjs().startOf('week').add(1, 'day');
-    const endOfWeek = dayjs().endOf('week').add(1, 'day');
+    const startOfWeek = dayjs().startOf('week');
+    const endOfWeek = dayjs().endOf('week');
 
     // 查询本周每天最后一条记录
     const records = await db.$queryRaw<GetUserWeekTrendSchemaItem[]>`

@@ -11,6 +11,10 @@ import merge from 'lodash.merge';
 import Layout from '@/components/layout';
 import { ThemeProvider } from '@/components/Theme/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
+// dayjs
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+dayjs.locale('zh-cn');
 
 export const metadata: Metadata = {
   title: 'kiwi',
