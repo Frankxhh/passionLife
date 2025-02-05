@@ -27,12 +27,12 @@ const navBar = [
   {
     title: '训练',
     icon: <Dumbbell size={24} />,
-    url: '/trainingPlan',
+    url: '/training',
   },
   {
     title: '饮食',
     icon: <Utensils size={24} />,
-    url: '/dietPlan',
+    url: '/diet',
   },
 ];
 
