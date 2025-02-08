@@ -54,7 +54,7 @@ const ProfilePage = async () => {
   const userWeekTrend = await getUserWeekTrendAction();
   const userTarget = await getUserTargetAction();
   return (
-    <div className={'h-full w-full p-4'}>
+    <div className={'h-full w-full'}>
       <Card className={'mb-4 bg-gradient-to-b from-[#69B1FF] to-[#1677ff] text-white'}>
         <CardContent className={'px-4 pb-4 pt-2'}>
           <PhysicalData userInfo={userInfo.data ?? null} message={userInfo.message} />

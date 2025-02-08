@@ -3,6 +3,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from '@/co
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import BreadContent from './components/BreadContent';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const LayoutPage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -23,7 +24,7 @@ const LayoutPage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               </BreadcrumbList>
             </Breadcrumb>
           </header>
-          {children}
+          <ScrollArea className={'h-[calc(100vh-4rem)] p-4'}>{children}</ScrollArea>
         </SidebarInset>
       </SidebarProvider>
     </>

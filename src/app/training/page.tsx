@@ -9,9 +9,9 @@ import { getTodayTrainingAction } from '@/actions/training';
 const Training = async () => {
   const trainingInfo = await getTodayTrainingAction();
   return (
-    <div className={'h-full w-full p-4'}>
+    <div className={'h-full w-full'}>
       {/* 本周训练目标 */}
-      <Card className="mb-6 overflow-hidden">
+      <Card className="mb-6">
         <div className="p-6">
           <div className="flex items-start justify-between">
             <div>
