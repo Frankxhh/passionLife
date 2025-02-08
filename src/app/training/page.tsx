@@ -10,7 +10,7 @@ const Training = async () => {
   return (
     <div className={'h-full w-full'}>
       {/* 训练头部信息 */}
-      <TrainingHeader />
+      <TrainingHeader statistics={trainingInfo?.data?.statistics} />
 
       {/* 今日训练 */}
       <div className="flex flex-row items-center justify-between">
@@ -22,7 +22,7 @@ const Training = async () => {
           </Button>
         </Link>
       </div>
-      <TrainingRecord trainingInfo={trainingInfo.data} />
+      <TrainingRecord trainingInfo={trainingInfo?.data?.records} />
       {/* 训练列表 */}
     </div>
   );

@@ -1,7 +1,7 @@
-import { type GetTodayTrainingSchema } from '@/actions/training/type';
+import { type TrainingRecord } from '@/actions/training/type';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
-const TrainingRecord = ({ trainingInfo }: { trainingInfo?: GetTodayTrainingSchema[] | null }) => {
+const TrainingRecord = ({ trainingInfo }: { trainingInfo?: TrainingRecord[] | null }) => {
   return (
     <div className="container mx-auto mt-4 max-w-2xl">
       <div className="space-y-4">
