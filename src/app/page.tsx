@@ -1,37 +1,93 @@
-import Link from "next/link";
+import { Suspense } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import PhysicalData from '@/components/home/PhysicalData';
+import WeightTrendsChart from '@/components/home/WeightTrendsChart';
+import TargetCard from '@/components/home/TargetCard';
+import { getUserInfoAction, getUserWeekTrendAction } from '@/actions/user';
+import { getUserTargetAction } from '@/actions/userTarget';
+import FallBack from '@/components/home/FallBack';
+import AlreadyCard from '@/components/home/AlreadyCard';
+import DrinkWater from '@/components/home/DrinkWater';
 
-export default function HomePage() {
+export interface TargetListItem {
+  key: string;
+  title: string;
+  description: string;
+}
+
+// const targetList: TargetListItem[] = [
+//   {
+//     key: 'training',
+//     title: '训练目标',
+//     description: '训练计划',
+//   },
+//   {
+//     key: 'diet',
+//     title: '营养统计',
+//     description: '饮食成就',
+//   },
+// ];
+export interface alreadyItem {
+  key: string;
+  title: string;
+  unit: string;
+  icon: string;
+}
+// 运动时间 摄入千卡
+const alreadyList: alreadyItem[] = [
+  {
+    key: 'exerciseTime',
+    title: '运动',
+    unit: '小时',
+    icon: 'sport',
+  },
+  {
+    key: 'calories',
+    title: '摄入',
+    unit: '千卡',
+    icon: 'food',
+  },
+];
+
+const ProfilePage = async () => {
+  const userInfo = await getUserInfoAction();
+  const userWeekTrend = await getUserWeekTrendAction();
+  const userTarget = await getUserTargetAction();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
-        </div>
-      </div>
-    </main>
+    <div className={'h-full w-full'}>
+      <Card className={'mb-4 bg-gradient-to-b from-[#69B1FF] to-[#1677ff] text-white'}>
+        <CardContent className={'px-4 pb-4 pt-2'}>
+          <PhysicalData userInfo={userInfo.data ?? null} message={userInfo.message} />
+        </CardContent>
+      </Card>
+      <Card className={'mb-4'}>
+        <CardHeader className={'px-4 py-4 pb-0'}>
+          <CardTitle className={'flex justify-between'}>
+            <span>趋势</span>
+            <span>周报</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className={'p-4 py-0'}>
+          <WeightTrendsChart userWeekTrend={userWeekTrend.data ?? null} message={userWeekTrend.message} />
+        </CardContent>
+      </Card>
+      {/* 本周运动/摄入 */}
+      {alreadyList.map(item => (
+        <AlreadyCard key={item.key} alreadyItem={item} />
+      ))}
+      {/* 饮水记录 */}
+      <DrinkWater />
+      {/* {targetList.map(item => (
+        <TargetCard key={item.title} targetItem={item} userTarget={userTarget.data ?? null} />
+      ))} */}
+    </div>
+  );
+};
+
+export default function Page() {
+  return (
+    <Suspense fallback={<FallBack />}>
+      <ProfilePage />
+    </Suspense>
   );
 }

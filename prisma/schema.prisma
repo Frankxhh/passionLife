@@ -2,19 +2,50 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+// 用户目标模型
+model UserTarget {
+  userId    String   @unique // clerk返回的用户id
+  weeklyTrainingTarget  Int      @default(3)// 每周目标训练次数
+  weeklyDietTarget      Int      @default(5)// 每周目标饮食达标次数
+  targetWeight          Float    // 目标体重(g)
+  targetBMI             Float    // 目标BMI
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
 
-    @@index([name])
+// 用户身体数据历史记录
+model UserInfoHistory {
+  id        String   @id @default(cuid())
+  userId    String   // clerk返回的用户id
+  height    Float    // 身高(cm)
+  weight    Float    // 体重(kg)
+  bmi       Float   // 当时的BMI
+  recordedAt      DateTime @default(now()) // 记录日期
+  updatedAt       DateTime @updatedAt
+  
+  @@index([userId, recordedAt]) // 添加复合索引优化查询性能
+}
+
+// 训练记录
+model Training {
+  id        String   @id @default(cuid())
+  userId    String   // 用户ID
+  type      String   // 训练类型
+  name      String   // 训练名称
+  duration  Int      // 训练时长(分钟)
+  calories  Float   // 消耗卡路里
+  groupCount Int?// 无氧-训练组数
+  weight Float?// 无氧-每组重量
+  exhaustionCount Int?  // 无氧-最大力竭次数
+  description String?  // 训练描述
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
