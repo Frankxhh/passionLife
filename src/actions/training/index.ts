@@ -6,6 +6,7 @@ import { handleServerAction, type ServerResponse } from '../middleware/response'
 import { db } from '@/server/db';
 import { type GetTodayTrainingSchema, trainingFormSchema, type TrainingSchema } from './type';
 import dayjs from 'dayjs';
+import { revalidatePath } from 'next/cache';
 
 // 查询今日训练记录
 export const getTodayTrainingAction = withAuth<void, ServerResponse<GetTodayTrainingSchema[] | null>>(async userId => {
@@ -32,5 +33,6 @@ export const addTrainingAction = withAuth<TrainingSchema, ServerResponse<void>>(
       },
     });
     // 保存训练数据
+    revalidatePath('/training');
   });
 });

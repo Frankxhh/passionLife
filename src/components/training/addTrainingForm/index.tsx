@@ -204,7 +204,7 @@ const TrainingForm = ({ type }: TrainingFormProps) => {
           )}
         />
 
-        <Button type="submit" className="w-full">
+        <Button type="submit" disabled={form.formState.isSubmitting} className="w-full">
           提交
         </Button>
       </form>
