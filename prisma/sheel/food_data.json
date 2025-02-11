@@ -1,6 +1,6 @@
 [
   {
-    "category": 1,
+    "category": "stapleFoods",
     "categoryName": "谷薯芋、杂豆、主食",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2020/5/27/small_photo_url_big_photo_url_f81e8de29f76e6d0c39d4142fe45764f.jpg",
     "title": "米饭",
@@ -8,7 +8,7 @@
     "unit": "每100克"
   },
   {
-    "category": 1,
+    "category": "stapleFoods",
     "categoryName": "谷薯芋、杂豆、主食",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2021/8/18/small_photo_url_b5f53dc1e9ce677c4d1499b163e07cb0.jpg",
     "title": "鲜玉米",
@@ -16,7 +16,7 @@
     "unit": "每100克"
   },
   {
-    "category": 2,
+    "category": "meatAndEggs",
     "categoryName": "蛋类、肉类及制品",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2022/1/24/small_photo_url_e9b40feec6a0f184369ce594c1137e82.jpg",
     "title": "鸡蛋",
@@ -24,7 +24,7 @@
     "unit": "每100克"
   },
   {
-    "category": 2,
+    "category": "meatAndEggs",
     "categoryName": "蛋类、肉类及制品",
     "imgUrl": "https://s.boohee.cn/house/new_food/small/1cfe23ebcba74e6486fda4434c8027fd.jpg",
     "title": "鸡胸肉",
@@ -32,7 +32,7 @@
     "unit": "每100克"
   },
   {
-    "category": 3,
+    "category": "dairy",
     "categoryName": "奶类及制品",
     "imgUrl": "https://s.boohee.cn/house/new_food/small/50375497d540439bbb1419b9a1b06525.jpg",
     "title": "牛奶",
@@ -40,7 +40,7 @@
     "unit": "每100毫升"
   },
   {
-    "category": 3,
+    "category": "dairy",
     "categoryName": "奶类及制品",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2020/5/14/small_photo_url_c69107d7a2054764132cc4d2a52e950f.jpg",
     "title": "拿铁",
@@ -48,7 +48,7 @@
     "unit": "每100毫升"
   },
   {
-    "category": 4,
+    "category": "vegetablesAndFruits",
     "categoryName": "蔬果和菌藻",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2022/1/24/small_photo_url_83bdb4eb0c7f4ab9580d9ccff0bcdced.jpg",
     "title": "苹果",
@@ -56,7 +56,7 @@
     "unit": "每100克"
   },
   {
-    "category": 4,
+    "category": "vegetablesAndFruits",
     "categoryName": "蔬果和菌藻",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2021/8/18/small_photo_url_e8f9f1ce152bd4bbf9d2ef6381a71d0e.jpg",
     "title": "香蕉",
@@ -64,7 +64,7 @@
     "unit": "每100克"
   },
   {
-    "category": 5,
+    "category": "nutsAndBeans",
     "categoryName": "坚果、大豆及制品",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2020/5/21/small_photo_url_ee9adb78b1d28fc22e2369cfbb9bf1a7.jpg",
     "title": "豆浆",
@@ -72,7 +72,7 @@
     "unit": "每100毫升"
   },
   {
-    "category": 5,
+    "category": "nutsAndBeans",
     "categoryName": "坚果、大豆及制品",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2021/8/18/small_photo_url_c185351df9651feb875cae47f8ec3b13.jpg",
     "title": "核桃(干)",
@@ -80,7 +80,7 @@
     "unit": "每100克"
   },
   {
-    "category": 6,
+    "category": "beverages",
     "categoryName": "饮料",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2022/1/24/small_photo_url_76cab6f45a19eed2088c8954111e3b92.jpg",
     "title": "无糖美式咖啡",
@@ -88,7 +88,7 @@
     "unit": "每100毫升"
   },
   {
-    "category": 6,
+    "category": "beverages",
     "categoryName": "饮料",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2020/6/20/small_photo_url_big_photo_url_6e2ec89a9283f8c8580b9c61688e879e.jpg",
     "title": "水",
@@ -96,7 +96,7 @@
     "unit": "每100毫升"
   },
   {
-    "category": 7,
+    "category": "oils",
     "categoryName": "食用油、油脂及制品",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2020/5/14/small_photo_url_bc19d2387c1d03acc00c74d0489cd995.jpg",
     "title": "花生油",
@@ -104,7 +104,7 @@
     "unit": "每100毫升"
   },
   {
-    "category": 7,
+    "category": "oils",
     "categoryName": "食用油、油脂及制品",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2020/5/14/small_photo_url_bc19d2387c1d03acc00c74d0489cd995.jpg",
     "title": "橄榄油",
@@ -112,7 +112,7 @@
     "unit": "每100毫升"
   },
   {
-    "category": 8,
+    "category": "seasonings",
     "categoryName": "调味品",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2021/8/20/small_photo_url_7b759946a9300608224e33887e0ce528.jpg",
     "title": "蜂蜜",
@@ -120,7 +120,7 @@
     "unit": "每100克"
   },
   {
-    "category": 8,
+    "category": "seasonings",
     "categoryName": "调味品",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2020/6/26/small_photo_url_big_photo_url_61cb136fe0345578e1fa20da7e0114b2.jpg",
     "title": "酱油",
@@ -128,7 +128,7 @@
     "unit": "每100毫升"
   },
   {
-    "category": 9,
+    "category": "snacks",
     "categoryName": "零食、点心、冷饮",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2020/5/18/small_photo_url_27d2e18cb023eee39d0939c1965b652d.jpg",
     "title": "蛋挞",
@@ -136,7 +136,7 @@
     "unit": "每100克"
   },
   {
-    "category": 9,
+    "category": "snacks",
     "categoryName": "零食、点心、冷饮",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2021/8/18/small_photo_url_a8ed7a2e11af3693ee2c0986459bf42b.jpg",
     "title": "饼干",
@@ -144,7 +144,7 @@
     "unit": "每100克"
   },
   {
-    "category": 10,
+    "category": "others",
     "categoryName": "其它",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2020/5/27/small_photo_url_d0ceacb30859e1cd3b97b66dcf343e55.jpg",
     "title": "枸杞",
@@ -152,7 +152,7 @@
     "unit": "每100克"
   },
   {
-    "category": 10,
+    "category": "others",
     "categoryName": "其它",
     "imgUrl": "https://s.boohee.cn/house/upload_food/2021/5/19/small_photo_url_f5f8cbafc57dd66bda23f62de1548d47.jpg",
     "title": "燕窝",
