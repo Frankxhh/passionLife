@@ -58,7 +58,12 @@ model FoodList {
   imgUrl      String   // 图片链接
   title      String   // 标题
   calories      Float   // 卡路里
-  unit      String   // 单位
+  servingSize      String   // 份量
+  unit String // 单位
+  carbs  Float // 碳水百分比
+  protein Float // 蛋白质百分比
+  fat Float // 脂肪百分比
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
