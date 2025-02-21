@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { getTodayTrainingAction } from '@/actions/training';
-import { Suspense } from 'react';
 import TrainingHeader from '@/components/training/TrainingHeader';
 import TrainingRecord from '@/components/training/TrainingRecord';
 const Training = async () => {
@@ -27,10 +26,4 @@ const Training = async () => {
     </div>
   );
 };
-export default function Page() {
-  return (
-    <Suspense fallback={<div>加载中...</div>}>
-      <Training />
-    </Suspense>
-  );
-}
+export default Training;

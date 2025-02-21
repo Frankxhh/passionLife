@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Image from 'next/image';
 import AddTrainingForm from '@/components/training/addTrainingForm';
-
 const AddTrainingPage = () => {
   return (
     <div className="container mx-auto max-w-2xl">
