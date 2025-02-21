@@ -57,7 +57,7 @@ const SetTarget: React.FC<{ userTarget: GetUserTargetSchema | null; toGetUserTar
   };
 
   return (
-    <Drawer open={open} onOpenChange={open => setOpen(open)}>
+    <Drawer open={open} onOpenChange={open => setOpen(open)} autoFocus={open}>
       <DrawerTrigger asChild>
         <Button variant="outline">设置目标</Button>
       </DrawerTrigger>
