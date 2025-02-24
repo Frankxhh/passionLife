@@ -77,6 +77,9 @@ model UserDietRecord {
   foodId      String   // 食物ID
   mealType    String   // 餐食类型：早餐/午餐/晚餐/加餐
   servingSize Float    // 食用份量
+  carbs       Float    // 碳水
+  protein     Float    // 蛋白质
+  fat         Float    // 脂肪
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
