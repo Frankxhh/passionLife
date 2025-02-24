@@ -4,16 +4,37 @@ import { withAuth } from '../middleware/auth';
 
 import { handleServerAction, type ServerResponse } from '../middleware/response';
 import { db } from '@/server/db';
-import { type GetTodayTrainingSchema, trainingFormSchema, type TrainingSchema } from './type';
+import { type GetTodayTrainingRes, type TrainingStatistics, trainingFormSchema, type TrainingSchema } from './type';
 import dayjs from 'dayjs';
+import { revalidatePath } from 'next/cache';
 
 // 查询今日训练记录
-export const getTodayTrainingAction = withAuth<void, ServerResponse<GetTodayTrainingSchema[] | null>>(async userId => {
+export const getTodayTrainingAction = withAuth<void, ServerResponse<GetTodayTrainingRes | null>>(async userId => {
   return handleServerAction(async () => {
     const training = await db.training.findMany({
       where: { userId, createdAt: { gte: dayjs().startOf('day').toDate(), lte: dayjs().endOf('day').toDate() } },
     });
-    return training ? training.map(item => ({ ...item, createdAt: dayjs(item.createdAt).format('HH:mm:ss') })) : null;
+    const records = training
+      ? training.map(item => ({
+          ...item,
+          createdAt: dayjs(item.createdAt).format('HH:mm:ss'),
+        }))
+      : null;
+    // 计算统计数据
+    const statistics: TrainingStatistics = {
+      trainingCount: records?.length ?? 0,
+      totalCalories: records?.reduce((sum, item) => sum + item.calories, 0) ?? 0,
+      totalDuration: records?.reduce((sum, item) => sum + item.duration, 0) ?? 0,
+      totalActions:
+        records?.reduce(
+          (sum, item) => sum + (item.type === 'anaerobic' ? (item.groupCount ?? 0) * (item.exhaustionCount ?? 0) : 0),
+          0,
+        ) ?? 0,
+    };
+    return {
+      records,
+      statistics,
+    };
   });
 });
 
@@ -32,5 +53,6 @@ export const addTrainingAction = withAuth<TrainingSchema, ServerResponse<void>>(
       },
     });
     // 保存训练数据
+    revalidatePath('/training');
   });
 });

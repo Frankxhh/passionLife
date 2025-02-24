@@ -39,7 +39,7 @@ const alreadyList: alreadyItem[] = [
     key: 'exerciseTime',
     title: '运动',
     unit: '小时',
-    icon: 'sport',
+    icon: 'running',
   },
   {
     key: 'calories',

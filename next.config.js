@@ -4,7 +4,22 @@
  */
 import './src/env.js';
 
-/** @type {import("next").NextConfig} */
-const config = {};
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 's.boohee.cn',
+        pathname: '/house/upload_food/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 's.boohee.cn',
+        pathname: '/house/new_food/small/**',
+      },
+    ],
+  },
+};
 
-export default config;
+export default nextConfig;

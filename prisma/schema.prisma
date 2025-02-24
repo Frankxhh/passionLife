@@ -48,4 +48,37 @@ model Training {
   description String?  // 训练描述
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId, createdAt]) // 添加复合索引优化查询性能
+}
+
+// 食物清单
+model FoodList {
+  id        String   @id @default(cuid())
+  category      String   // 分类
+  categoryName      String   // 分类名称
+  imgUrl      String   // 图片链接
+  title      String   // 标题
+  calories      Float   // 卡路里
+  servingSize      String   // 份量
+  unit String // 单位
+  carbs  Float // 碳水百分比
+  protein Float // 蛋白质百分比
+  fat Float // 脂肪百分比
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 用户饮食记录
+model UserDietRecord {
+  id          String   @id @default(cuid())
+  userId      String   // 用户ID
+  foodId      String   // 食物ID
+  mealType    String   // 餐食类型：早餐/午餐/晚餐/加餐
+  servingSize Float    // 食用份量
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId, createdAt]) // 添加复合索引优化查询性能
 }

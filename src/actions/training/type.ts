@@ -32,8 +32,15 @@ export const trainingFormSchema = z.discriminatedUnion('type', [aerobicsTraining
 export type TrainingFormSchema = z.infer<typeof trainingFormSchema>;
 export type TrainingSchema = TrainingFormSchema & { type: 'aerobics' | 'anaerobic' };
 
+export interface TrainingStatistics {
+  trainingCount: number;
+  totalCalories: number;
+  totalDuration: number;
+  totalActions: number;
+}
+
 // 获取今日训练记录的返回类型
-export interface GetTodayTrainingSchema {
+export type TrainingRecord = {
   id: string;
   userId: string;
   name: string;
@@ -46,4 +53,9 @@ export interface GetTodayTrainingSchema {
   description: string | null;
   createdAt: string;
   updatedAt: Date;
-}
+};
+
+export type GetTodayTrainingRes = {
+  records: TrainingRecord[] | null;
+  statistics: TrainingStatistics;
+};
