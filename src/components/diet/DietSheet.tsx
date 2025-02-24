@@ -24,7 +24,10 @@ const DietSheet = ({ foodList }: DietSheetProps) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="w-full rounded-2xl border-emerald-800 py-5 text-emerald-800">
+        <Button
+          variant="outline"
+          className="fixed bottom-4 w-[calc(100%-2rem)] rounded-2xl border-emerald-800 py-5 text-emerald-800"
+        >
           <Plus />
           添加食物
         </Button>
