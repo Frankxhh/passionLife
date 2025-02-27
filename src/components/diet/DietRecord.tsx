@@ -26,7 +26,7 @@ const DietRecord = ({ dietRecordRes }: DietRecordProps) => {
               <CardContent className="p-4">
                 <div className="mb-2 flex justify-between">
                   <div>{getCurrentButton(key as MealType)}</div>
-                  <div className="text-sm text-muted-foreground">{getCalories(dietRecordRes)}卡路里</div>
+                  <div className="text-sm text-muted-foreground">{getCalories(dietRecordRes)}千卡</div>
                 </div>
                 {/* 摄入食物列表 */}
                 <div className="flex flex-col gap-2">
