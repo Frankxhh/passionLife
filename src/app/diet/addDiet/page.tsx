@@ -1,7 +1,7 @@
 'use client';
 
 import { addDietAction, getFoodDetail } from '@/actions/diet';
-import { MealType, type Foods } from '@/actions/diet/type';
+import { type MealType, type Foods } from '@/actions/diet/type';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft } from 'lucide-react';

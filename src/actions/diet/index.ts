@@ -5,10 +5,10 @@ import { withAuth } from '../middleware/auth';
 import { handleServerAction, type ServerResponse } from '../middleware/response';
 import {
   type DietRecord,
-  DietRecordItemWithFood,
+  type DietRecordItemWithFood,
   type DietRecordSchema,
   dietRecordSchema,
-  DietRecordStatistics,
+  type DietRecordStatistics,
   type FoodListItem,
   type Foods,
   type MealType,
@@ -101,7 +101,7 @@ export const getDietRecord = withAuth<void, ServerResponse<DietRecord | null>>(a
         AND udr."createdAt" >= ${dayjs().startOf('day').toDate()}
         AND udr."createdAt" <= ${dayjs().endOf('day').toDate()}
     `;
-    let initDietRecord: DietRecord = {
+    const initDietRecord: DietRecord = {
       breakfast: [],
       lunch: [],
       dinner: [],
@@ -122,7 +122,7 @@ export const getDietRecordChart = withAuth<void, ServerResponse<DietRecordStatis
     const dietRecords = await db.userDietRecord.findMany({
       where: { userId, createdAt: { gte: dayjs().startOf('day').toDate(), lte: dayjs().endOf('day').toDate() } },
     });
-    let initDietRecordChart = {
+    const initDietRecordChart: DietRecordStatistics = {
       carbs: 0,
       protein: 0,
       fat: 0,
