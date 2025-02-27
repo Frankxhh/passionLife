@@ -3,7 +3,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -78,6 +77,7 @@ model UserDietRecord {
   foodId      String   // 食物ID
   mealType    String   // 餐食类型：早餐/午餐/晚餐/加餐
   servingSize Float    // 食用份量
+  totalCalories Float // 摄入卡路里
   carbs       Float    // 碳水
   protein     Float    // 蛋白质
   fat         Float    // 脂肪
