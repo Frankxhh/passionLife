@@ -10,9 +10,8 @@ const DietPage = async () => {
   const dietRecordChartRes = await getDietRecordChart();
 
   // 图表数据统计
-  const dietData = dietRecordChartRes?.data ?? { carbs: 0, protein: 0, fat: 0 };
-  const dietRecordChartStatisticsSum = dietData.carbs + dietData.protein + dietData.fat;
-
+  const dietData = dietRecordChartRes?.data ?? { carbs: 0, protein: 0, fat: 0, servingSize: 0 };
+  const dietRecordChartStatisticsSum = dietData.servingSize;
   const dietRecordChartStatisticsPercent =
     dietRecordChartStatisticsSum === 0
       ? { carbs: '-', protein: '-', fat: '-' }

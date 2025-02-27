@@ -24,6 +24,7 @@ export interface FoodListItem {
 export const dietRecordSchema = z.object({
   foodId: z.string(),
   mealType: z.enum(['breakfast', 'lunch', 'dinner', 'snack']),
+  totalCalories: z.number(),
   servingSize: z.coerce.number(),
   carbs: z.coerce.number(),
   protein: z.coerce.number(),
@@ -48,6 +49,7 @@ export interface DietRecordItem {
 export interface DietRecordItemWithFood extends DietRecordItem {
   imgUrl: string;
   title: string;
+  totalCalories: number;
 }
 
 export type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snack';
@@ -58,4 +60,5 @@ export interface DietRecordStatistics {
   carbs: number;
   protein: number;
   fat: number;
+  servingSize: number;
 }

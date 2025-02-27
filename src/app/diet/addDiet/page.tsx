@@ -16,6 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import { timeButtons, nutritionReducer, initialState } from '@/components/diet/addDiet';
 import { useRouter } from 'next/navigation';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { round } from 'mathjs';
 const AddDietPage = () => {
   const searchParams = useSearchParams();
   const foodId = searchParams.get('foodId');
@@ -68,6 +69,7 @@ const AddDietPage = () => {
         foodId: foodId!,
         mealType: time as MealType,
         servingSize: Number(servingSize),
+        totalCalories: round((Number(servingSize) * (foodDetail?.calories ?? 0)) / 100, 2),
         carbs: nutritionState.carbs,
         protein: nutritionState.protein,
         fat: nutritionState.fat,

@@ -12,7 +12,7 @@ const getCurrentButton = (key: MealType) => {
 };
 
 const getCalories = (dietRecordRes: DietRecordItemWithFood[]) => {
-  return dietRecordRes.reduce((acc, item) => acc + item.servingSize, 0);
+  return dietRecordRes.reduce((acc, item) => acc + item.totalCalories, 0);
 };
 
 const DietRecord = ({ dietRecordRes }: DietRecordProps) => {
@@ -40,7 +40,7 @@ const DietRecord = ({ dietRecordRes }: DietRecordProps) => {
                             </div>
                             <div>{item.title}</div>
                           </div>
-                          <div>{item.servingSize}</div>
+                          <div>{item.totalCalories}</div>
                         </div>
                       );
                     })

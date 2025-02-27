@@ -126,11 +126,13 @@ export const getDietRecordChart = withAuth<void, ServerResponse<DietRecordStatis
       carbs: 0,
       protein: 0,
       fat: 0,
+      servingSize: 0,
     };
     return dietRecords.reduce((result, item) => {
       result.carbs = round(add(result.carbs, item.carbs), 2);
       result.protein = round(add(result.protein, item.protein), 2);
       result.fat = round(add(result.fat, item.fat), 2);
+      result.servingSize = round(add(result.servingSize, item.servingSize), 2);
       return result;
     }, initDietRecordChart);
   });
