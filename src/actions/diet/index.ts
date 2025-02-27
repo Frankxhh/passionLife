@@ -3,10 +3,19 @@
 import { db } from '@/server/db';
 import { withAuth } from '../middleware/auth';
 import { handleServerAction, type ServerResponse } from '../middleware/response';
-import { DietRecord, type DietRecordSchema, dietRecordSchema, type FoodListItem, type Foods, MealType } from './type';
+import {
+  type DietRecord,
+  type DietRecordItemWithFood,
+  type DietRecordSchema,
+  dietRecordSchema,
+  type DietRecordStatistics,
+  type FoodListItem,
+  type Foods,
+  type MealType,
+} from './type';
 import { revalidatePath, unstable_cache } from 'next/cache';
 import dayjs from 'dayjs';
-
+import { round, add } from 'mathjs';
 const createFoodsItem = (item: Foods) => {
   return {
     id: item.id,
@@ -68,6 +77,9 @@ export const addDietAction = withAuth<DietRecordSchema, ServerResponse<void>>(as
       data: {
         userId,
         ...data,
+        carbs: round(data.carbs, 2),
+        protein: round(data.protein, 2),
+        fat: round(data.fat, 2),
       },
     });
     // 保存训练数据
@@ -75,21 +87,53 @@ export const addDietAction = withAuth<DietRecordSchema, ServerResponse<void>>(as
   });
 });
 // 获取今日饮食记录
-const initDietRecord: DietRecord = {
-  breakfast: [],
-  lunch: [],
-  dinner: [],
-  snack: [],
-};
+
 export const getDietRecord = withAuth<void, ServerResponse<DietRecord | null>>(async userId => {
   return handleServerAction(async () => {
-    const dietRecords = await db.userDietRecord.findMany({
-      where: { userId, createdAt: { gte: dayjs().startOf('day').toDate(), lte: dayjs().endOf('day').toDate() } },
-    });
+    const dietRecords = await db.$queryRaw<DietRecordItemWithFood[]>`
+      SELECT 
+        udr.*,
+        fl."imgUrl",
+        fl."title"
+      FROM "UserDietRecord" udr
+      LEFT JOIN "FoodList" fl ON udr."foodId" = fl.id
+      WHERE udr."userId" = ${userId}
+        AND udr."createdAt" >= ${dayjs().startOf('day').toDate()}
+        AND udr."createdAt" <= ${dayjs().endOf('day').toDate()}
+    `;
+    const initDietRecord: DietRecord = {
+      breakfast: [],
+      lunch: [],
+      dinner: [],
+      snack: [],
+    };
     const dietRecord = dietRecords.reduce((result, item) => {
       result[item.mealType as MealType] = [...result[item.mealType as MealType], item];
       return result;
     }, initDietRecord);
     return dietRecord;
+  });
+});
+
+// 获取今日饮食统计图表(碳水/蛋白质/脂肪)
+
+export const getDietRecordChart = withAuth<void, ServerResponse<DietRecordStatistics | null>>(async userId => {
+  return handleServerAction(async () => {
+    const dietRecords = await db.userDietRecord.findMany({
+      where: { userId, createdAt: { gte: dayjs().startOf('day').toDate(), lte: dayjs().endOf('day').toDate() } },
+    });
+    const initDietRecordChart: DietRecordStatistics = {
+      carbs: 0,
+      protein: 0,
+      fat: 0,
+      servingSize: 0,
+    };
+    return dietRecords.reduce((result, item) => {
+      result.carbs = round(add(result.carbs, item.carbs), 2);
+      result.protein = round(add(result.protein, item.protein), 2);
+      result.fat = round(add(result.fat, item.fat), 2);
+      result.servingSize = round(add(result.servingSize, item.servingSize), 2);
+      return result;
+    }, initDietRecordChart);
   });
 });

@@ -1,7 +1,7 @@
 'use client';
 
-import { getFoodDetail } from '@/actions/diet';
-import { type Foods } from '@/actions/diet/type';
+import { addDietAction, getFoodDetail } from '@/actions/diet';
+import { type MealType, type Foods } from '@/actions/diet/type';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft } from 'lucide-react';
@@ -16,6 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import { timeButtons, nutritionReducer, initialState } from '@/components/diet/addDiet';
 import { useRouter } from 'next/navigation';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { round } from 'mathjs';
 const AddDietPage = () => {
   const searchParams = useSearchParams();
   const foodId = searchParams.get('foodId');
@@ -55,7 +56,7 @@ const AddDietPage = () => {
     });
   };
 
-  const handleAddDiet = () => {
+  const handleAddDiet = async () => {
     if (servingSize === 0) {
       toast({
         title: '请输入食物份量',
@@ -63,11 +64,28 @@ const AddDietPage = () => {
       });
       return;
     }
-    toast({
-      title: '添加成功',
-    });
-    // 返回
-    router.back();
+    try {
+      await addDietAction({
+        foodId: foodId!,
+        mealType: time as MealType,
+        servingSize: Number(servingSize),
+        totalCalories: round((Number(servingSize) * (foodDetail?.calories ?? 0)) / 100, 2),
+        carbs: nutritionState.carbs,
+        protein: nutritionState.protein,
+        fat: nutritionState.fat,
+      });
+      toast({
+        title: '添加成功',
+      });
+      // 返回
+      router.back();
+    } catch (error) {
+      toast({
+        title: '添加失败',
+        variant: 'destructive',
+        description: error instanceof Error ? error.message : '未知错误',
+      });
+    }
   };
 
   return (

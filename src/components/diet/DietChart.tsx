@@ -4,13 +4,7 @@ import { RadialBar, RadialBarChart } from 'recharts';
 
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-const chartData = [
-  { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
-  { browser: 'safari', visitors: 200, fill: 'var(--color-safari)' },
-  { browser: 'firefox', visitors: 187, fill: 'var(--color-firefox)' },
-  { browser: 'edge', visitors: 173, fill: 'var(--color-edge)' },
-  { browser: 'other', visitors: 90, fill: 'var(--color-other)' },
-];
+import { type DietRecordStatistics } from '@/actions/diet/type';
 
 const chartConfig = {
   visitors: {
@@ -38,7 +32,17 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const DietChart = () => {
+interface DietChartProps {
+  dietRecordChartRes?: DietRecordStatistics | null;
+  dietRecordChartStatisticsPercent: Record<string, string>;
+}
+
+const DietChart = ({ dietRecordChartRes, dietRecordChartStatisticsPercent }: DietChartProps) => {
+  const chartData = [
+    { browser: '碳水', visitors: dietRecordChartRes?.carbs, fill: 'var(--color-chrome)' },
+    { browser: '蛋白质', visitors: dietRecordChartRes?.protein, fill: 'var(--color-safari)' },
+    { browser: '脂肪', visitors: dietRecordChartRes?.fat, fill: 'var(--color-firefox)' },
+  ];
   return (
     <Card className="mb-4 flex flex-col">
       {/* <CardHeader className="items-center pb-0">
@@ -62,8 +66,8 @@ const DietChart = () => {
                 <span className="text-sm font-medium">碳水</span>
               </div>
               <div className="flex items-center gap-6">
-                <span className="text-sm">100g</span>
-                <span className="w-12 text-right text-sm">32%</span>
+                <span className="text-sm">{dietRecordChartRes?.carbs}</span>
+                <span className="w-12 text-right text-sm">{dietRecordChartStatisticsPercent.carbs}</span>
               </div>
             </div>
             <div className="flex items-center justify-between">
@@ -72,9 +76,9 @@ const DietChart = () => {
                 <span className="text-sm font-medium">蛋白质</span>
               </div>
               <div className="flex items-center gap-6">
-                <span className="text-sm">100g</span>
+                <span className="text-sm">{dietRecordChartRes?.protein}</span>
 
-                <span className="w-12 text-right text-sm">32%</span>
+                <span className="w-12 text-right text-sm">{dietRecordChartStatisticsPercent.protein}</span>
               </div>
             </div>
             <div className="flex items-center justify-between">
@@ -83,9 +87,9 @@ const DietChart = () => {
                 <span className="text-sm font-medium">脂肪</span>
               </div>
               <div className="flex items-center gap-6">
-                <span className="text-sm">100g</span>
+                <span className="text-sm">{dietRecordChartRes?.fat}</span>
 
-                <span className="w-12 text-right text-sm">32%</span>
+                <span className="w-12 text-right text-sm">{dietRecordChartStatisticsPercent.fat}</span>
               </div>
             </div>
           </div>
