@@ -7,11 +7,13 @@ import {
   type EditUserInfoSchema,
   type GetUserWeekTrendSchema,
   type GetUserWeekTrendSchemaItem,
+  GetUserTodayStatisticsSchema,
 } from './type';
 import { handleServerAction, type ServerResponse } from '../middleware/response';
 import { db } from '@/server/db';
 import dayjs from 'dayjs';
 import { revalidatePath } from 'next/cache';
+import { round } from 'mathjs';
 // 获取用户信息
 export const getUserInfoAction = withAuth<void, ServerResponse<GetUserInfoSchema | null>>(async userId => {
   return handleServerAction(async () => {
@@ -131,3 +133,44 @@ export const getUserWeekTrendAction = withAuth<void, ServerResponse<GetUserWeekT
     };
   });
 });
+
+// 获取用户今日运动/饮食等指标统计
+export const getUserTodayStatisticsAction = withAuth<void, ServerResponse<GetUserTodayStatisticsSchema | null>>(
+  async userId => {
+    return handleServerAction(async () => {
+      const today = dayjs().startOf('day').toDate();
+      const endOfDay = dayjs().endOf('day').toDate();
+
+      // 查询今日运动记录
+      const trainingRecords = await db.training.findMany({
+        where: {
+          userId,
+          createdAt: {
+            gte: today,
+            lte: endOfDay,
+          },
+        },
+      });
+
+      // 查询今日饮食记录
+      const dietRecords = await db.userDietRecord.findMany({
+        where: {
+          userId,
+          createdAt: {
+            gte: today,
+            lte: endOfDay,
+          },
+        },
+      });
+
+      return {
+        duration: round(trainingRecords.reduce((acc, record) => acc + record.duration, 0) / 60, 2),
+        servingSize: round(
+          dietRecords.reduce((acc, record) => acc + record.servingSize, 0),
+          2,
+        ),
+        // water: dietRecords.reduce((acc, record) => acc + record.water, 0),
+      };
+    });
+  },
+);

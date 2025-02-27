@@ -2,8 +2,12 @@
 import { type alreadyItem } from '@/app/page';
 import { Card, CardContent } from '../ui/card';
 import Image from 'next/image';
+import { type GetUserTodayStatisticsSchema } from '@/actions/user/type';
 
-const AlerayCard: React.FC<{ alreadyItem: alreadyItem }> = ({ alreadyItem }) => {
+const AlreadyCard: React.FC<{ alreadyItem: alreadyItem; userTodayStatistics: GetUserTodayStatisticsSchema | null }> = ({
+  alreadyItem,
+  userTodayStatistics,
+}) => {
   return (
     <Card className={'relative mt-4'}>
       <CardContent className={'p-4'}>
@@ -19,7 +23,9 @@ const AlerayCard: React.FC<{ alreadyItem: alreadyItem }> = ({ alreadyItem }) => 
             <span>今日已{alreadyItem.title}</span>
           </div>
           <div className={'flex flex-row items-baseline justify-between'}>
-            <span className={'mr-2 text-2xl'}>1000</span>
+            <span className={'mr-2 text-2xl'}>
+              {userTodayStatistics?.[alreadyItem.key as keyof GetUserTodayStatisticsSchema] ?? 0}
+            </span>
             <span className={'text-sm text-gray-400'}>{alreadyItem.unit}</span>
           </div>
         </div>
@@ -28,4 +34,4 @@ const AlerayCard: React.FC<{ alreadyItem: alreadyItem }> = ({ alreadyItem }) => 
   );
 };
 
-export default AlerayCard;
+export default AlreadyCard;

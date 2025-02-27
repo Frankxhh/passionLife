@@ -2,9 +2,7 @@ import { Suspense } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import PhysicalData from '@/components/home/PhysicalData';
 import WeightTrendsChart from '@/components/home/WeightTrendsChart';
-import TargetCard from '@/components/home/TargetCard';
-import { getUserInfoAction, getUserWeekTrendAction } from '@/actions/user';
-import { getUserTargetAction } from '@/actions/userTarget';
+import { getUserInfoAction, getUserTodayStatisticsAction, getUserWeekTrendAction } from '@/actions/user';
 import FallBack from '@/components/home/FallBack';
 import AlreadyCard from '@/components/home/AlreadyCard';
 import DrinkWater from '@/components/home/DrinkWater';
@@ -36,13 +34,13 @@ export interface alreadyItem {
 // 运动时间 摄入千卡
 const alreadyList: alreadyItem[] = [
   {
-    key: 'exerciseTime',
+    key: 'duration',
     title: '运动',
     unit: '小时',
     icon: 'running',
   },
   {
-    key: 'calories',
+    key: 'servingSize',
     title: '摄入',
     unit: '千卡',
     icon: 'food',
@@ -52,7 +50,7 @@ const alreadyList: alreadyItem[] = [
 const ProfilePage = async () => {
   const userInfo = await getUserInfoAction();
   const userWeekTrend = await getUserWeekTrendAction();
-  const userTarget = await getUserTargetAction();
+  const userTodayStatistics = await getUserTodayStatisticsAction();
   return (
     <div className={'h-full w-full'}>
       <Card className={'mb-4 bg-gradient-to-b from-[#69B1FF] to-[#1677ff] text-white'}>
@@ -73,13 +71,10 @@ const ProfilePage = async () => {
       </Card>
       {/* 本周运动/摄入 */}
       {alreadyList.map(item => (
-        <AlreadyCard key={item.key} alreadyItem={item} />
+        <AlreadyCard key={item.key} alreadyItem={item} userTodayStatistics={userTodayStatistics.data ?? null} />
       ))}
       {/* 饮水记录 */}
       <DrinkWater />
-      {/* {targetList.map(item => (
-        <TargetCard key={item.title} targetItem={item} userTarget={userTarget.data ?? null} />
-      ))} */}
     </div>
   );
 };

@@ -47,3 +47,10 @@ export type GetUserWeekTrendSchema = {
   weight: ChartData;
   bmi: ChartData;
 };
+
+// 获取用户今日运动/饮食等指标统计
+export interface GetUserTodayStatisticsSchema {
+  duration: number;
+  servingSize: number;
+  // water: number;
+}
