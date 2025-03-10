@@ -11,6 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { CircleAlert } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { PopoverArrow } from '@radix-ui/react-popover';
+import AiChat from './AiChat';
 const BreadContent: React.FC = () => {
   const { user } = useUser();
   const [userTarget, setUserTarget] = useState<GetUserTargetSchema | null>(null);
@@ -56,6 +57,7 @@ const BreadContent: React.FC = () => {
         </Popover>
       )}
       <div className={'ml-auto flex items-center gap-2'}>
+        <AiChat />
         <ToggleMode />
         <UserButton />
         <span>{user?.username}</span>
