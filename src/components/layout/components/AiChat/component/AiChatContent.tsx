@@ -7,35 +7,39 @@ import { client, prompts, roles } from './config';
 
 const AiChatContent: React.FC = () => {
   const [agent] = useXAgent({
-    request: async (info, callbacks) => {
-      const { message } = info;
-      const { onSuccess, onUpdate, onError } = callbacks;
+    request: (info, callbacks) => {
+      (async () => {
+        {
+          const { message } = info;
+          const { onSuccess, onUpdate, onError } = callbacks;
 
-      let content = '';
+          let content = '';
 
-      try {
-        const stream = await client.chat.completions.create({
-          model: 'qwq-plus',
-          messages: [
-            {
-              role: 'system',
-              content: '你是一名专业的健身教练和营养师，你的名字叫做Cal LightMan，请根据用户的问题给出回答。',
-            },
-            { role: 'user', content: message ?? '' },
-          ],
-          stream: true,
-        });
+          try {
+            const stream = await client.chat.completions.create({
+              model: 'qwq-plus',
+              messages: [
+                {
+                  role: 'system',
+                  content: '你是一名专业的健身教练和营养师，你的名字叫做Cal LightMan，请根据用户的问题给出回答。',
+                },
+                { role: 'user', content: message ?? '' },
+              ],
+              stream: true,
+            });
 
-        for await (const chunk of stream) {
-          content += chunk.choices[0]?.delta?.content || '';
-          onUpdate(content);
+            for await (const chunk of stream) {
+              content += chunk.choices[0]?.delta?.content ?? '';
+              onUpdate(content);
+            }
+
+            onSuccess(content);
+          } catch (error) {
+            onUpdate('服务器繁忙');
+            console.log('error', error);
+          }
         }
-
-        onSuccess(content);
-      } catch (error) {
-        onUpdate('服务器繁忙');
-        console.log('error', error);
-      }
+      })();
     },
   });
 

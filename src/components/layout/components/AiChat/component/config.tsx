@@ -2,10 +2,10 @@ import { type PromptsProps } from '@ant-design/x';
 import { type RolesType } from '@ant-design/x/es/bubble/BubbleList';
 import { Bot, CircleAlert, Info, Lightbulb, Rocket, Smile, User } from 'lucide-react';
 import OpenAI from 'openai';
-
+import { env } from '@/env';
 export const client = new OpenAI({
   baseURL: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
-  apiKey: 'sk-94767ef3254e456ba139a66a2758b315',
+  apiKey: env.NEXT_PUBLIC_OPENAI_API_KEY,
   dangerouslyAllowBrowser: true,
 });
 
